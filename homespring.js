@@ -14,16 +14,17 @@ var Homespring = function(){
 
 global.Program = {
 	root:undefined,
+	isNull:false,
 	quit:false,
 	exit:function(){this.quit = true;}
 };
 
 Homespring.prototype.parse = function(a_sText){
 	if (a_sText.length == 0){
-		console.log("In Homespring, the null program is not a quine.");
-		return false;
+		Program.isNull = true;
 	}
 
+	a_sText = a_sText.replace("\r\n","\n");
 	if (this.log)
 		console.log(a_sText);
 	//first lets convert to all our tokens
@@ -129,6 +130,10 @@ Homespring.prototype.getNode = function(a_sName){
 };
 
 Homespring.prototype.run = function(a_nLimit){
+	if (Program.isNull){
+		console.log("In Homespring, the null program is not a quine.");
+		return;
+	}
 	var i = 0;
 	while(!Program.quit){
 		if (this.log)
