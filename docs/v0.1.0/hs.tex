@@ -1,0 +1,595 @@
+\documentclass[10pt]{article}
+
+\title{Homespring Proposed Language Standard}
+\author{Joe Neeman \and Jeff Binder}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+\subsection{Slogan}
+
+``Because programming isn't like a river, but it damn well ought to be.''
+
+\subsection{History}
+The original version of this document was included with Jeff Binder's Homespring interpreter and contained many
+omissions and ambiguities. This revised version was created by Joe Neeman in conjunction with his improved interpreter.
+The language documented here complies with the behaviour documented in the official language standard. It also
+correctly runs all examples provided with the official interpreter. However, it does \emph{not} proscribe the same
+behaviour as the official interpreter in every case. That is, the documented behaviour of this standard does not comply
+with the undocumented behaviour of the official interpreter except to the extent that it was necessary in order for
+the official examples to work.
+
+A Homespring interpreter that matches this documentation is included with this document.
+
+\subsection{Motivation}
+
+One of the problems with current programming languages is that they're too abstract. Although they frequently use metaphors to explain their concepts to users, these metaphors do not hold up very well in the long run. Enter Homespring, or Hatchery Oblivion through Marshy Energy from Snowmelt Powers Rapids Insulated but Not Great. It is also sometimes referred to as HOtMEfSPRIbNG.
+
+\subsubsection{Revolution Information}
+
+So what we have here is a new programming paradigm: Metaphor Oriented Programming, or MOP. MOP languages are built around a unified metaphor, and stick rigorously to its real-world properties and limits. This allows languages to be created that are both high-level and simple, offering exciting new abstractions and ideas that are familiar as they are powerful. As such, Homespring disposes of outmoded concepts such as classes, sequential execution, evaluation, assignment, binding, variables, numbers, and calculations.
+
+\subsubsection{Consequences of Failure to Learn}
+
+The Homespring language is the archetype of MOP, and it shows off all aspects of this revolutionary new concept. Learn it now or be left behind! Your current favourite language stands no chance! Now it is time to learn HOtMEfSPRIbNG, your next favourite language!
+
+\section{Lexical Structure}
+
+Before we get into the wonderful new concepts that you are impatiently awaiting, we must discuss Homespring's soon-to-be highly influential lexical structure.
+
+\subsection{Tokens}
+
+Homespring has exactly one (1) types of tokens: tokens. This simplicity will be greatly appreciated, once you try it. Tokens consist of zero (0) or a number greater than zero ($>$ 0) of non-whitespace characters, separated by one (1) character of whitespace.
+
+Many inferior languages include highly complex escape sequences and quoting rules. For example, how is one expected to remember that the `n' in \\n stands for `newline', when the inept designers who thought of this could just as well have chosen `e', `w', or any of the other character in that word? Homespring's system is far superior, as well as being intellectually stimulating.
+
+\subsubsection{Escaping}
+
+Homespring offers one (1) meta-character, namely, the period (`.'). To include a newline\footnote{A newline character causes a token to end even if it is escaped. Therefore it is impossible to include a newline except at the end of a token.} or a space in a token, precede it with a period. To include a period in a token, precede it with a space. The use of tabs is discouraged, as it is not possible in HOtMEfSPRIbNG.
+
+\subsubsection{Paradox}
+
+The sequences `  . ' and `. .' are required to cause a causality paradox in all conforming implementations. As such, there are no conforming implementations.
+
+\subsubsection{Example}
+
+Although Homespring's lexical rules are so simple that you don't need an example, one is provided anyway as a service to our customers. The following sequence:
+
+Hello,.   World ..
+
+is interpreted as:
+
+\begin{verbatim}
+(Hello, )()(World.
+)
+\end{verbatim}
+
+Note the conveniently easy to add blank token.
+
+\section{Syntax}
+
+Homespring disposes of the outdated notion of syntax, taking the burden of program design off the shoulders of the programmer and putting it nowhere in particular.
+
+\section{Program structure}
+
+\subsection{Inferiority of Other Approaches}
+
+In a bold and dynamic move, Homespring has only a single structure which is used by all programs. In the traditional languages which you are now free from and will never have to use again, you would waste most of your valuable time creating a structure for your program which does what you want it to do. HOtMEfSPRIbNG liberates you from this, allowing you to spend your time in a few mega-productive fits of work, and the get back to slacking off. You see, with Homespring you simply use the language's built-in structure, and come up with a way to force it to do what you want. The superiority of the approach is so obvious that it need not be mentioned.
+
+\subsection{The Ideal Approach}
+
+The tokens of a Homespring program are automatically formed into a tree structure, with the first token as the root, and the rest added one branch at a time. Blank tokens are used to jump up in the tree. By these simple rules, the program
+\begin{verbatim}
+a b c  d e   f g    h i
+\end{verbatim}
+is parsed into this tree:
+
+\begin{verbatim}
+    c
+   /
+  b-d-e
+ / \
+a   f
+ \   \
+  h   g
+   \
+    i
+\end{verbatim}
+
+Remember that the outmoded concept of indentation is not present in Homespring, since two spaces does not have the same meaning as one space. This allows you to avoid worrying about program style and focus on what programming is really about, the reproductive behaviour of salmon.
+
+A program with no tokens obviously can't be treated normally. Such a program will, as expected, print the message:
+\begin{verbatim}
+In Homespring, the null program is not a quine.
+\end{verbatim}
+and exit.
+
+\section{The River Paradigm}
+
+Homespring uses the paradigm of a river to create its astoundingly user-friendly semantics. Each program is a river system which flows into the watershed (the terminal output). Information is carried by salmon (which represent string values), which swim upstream trying to find their home river.
+Terminal input causes a new salmon to be spawned at the river mouth; when a salmon leaves the river system for the ocean,
+its value is output to the terminal. In this way, terminal I/O is neatly and elegantly represented within the system
+metaphor.
+
+The river is represented in an n-ary tree structure\footnote{In the HOtMEfSPRIbNG reference implementation, the parser
+allows for n-ary trees but the interpreter only runs the first two children of each node. This implementation runs over
+the full n-ary tree.} Each node in the tree is associated with
+\begin{enumerate}
+\item a name
+\item a list of salmon present at that node
+\item a power state
+\item a water state
+\item a snow state
+\item a destroyed state
+\end{enumerate}
+where each of the ``states'' in the above list is a boolean value. The name of the node determines its behaviour; a list
+of reserved names is in section~\ref{sec:nodes}. Every node whose name is not a reserved name is a spring: it creates water.
+
+Each salmon in the river system is associated with
+\begin{enumerate}
+\item a name
+\item an age (young or mature)
+\item a direction (upstream or downstream)
+\end{enumerate}
+
+\section{Program flow}
+
+The execution of a HOtMEfSPRIbNG program consists of several distinct stages, called ``ticks''. The order of ticks is as
+follows:
+\begin{enumerate}
+\item snow tick
+\item water tick
+\item power tick
+\item fish tick
+\item miscellaneous tick
+\item input tick
+\end{enumerate}
+
+\subsection{Snow tick}
+
+In the snow tick, the snow state of each node is updated. A node becomes snowy if it is not currently blocking snowmelts
+and if one of its children is snowy. The snow tick is propagated in a post-order fashion.
+
+Certain nodes will be destroyed when snowmelt reaches them. A node that is destroyed loses its abilities and its name
+(its name becomes ``'').
+
+\subsection{Water tick}
+
+In the water tick, the water state of each node is updated. A node becomes watered if it is not currently blocking water
+and if one of its children is watered. The water tick is propagated in a post-order fashion.
+
+\subsection{Power tick}
+
+Unlike the snow and water ticks, the power tick does not calculate the power state of each node; it merely
+calculates, for each node, whether that node should \emph{generate} power. The power state of each node is calculated on
+demand by checking for powered children.
+
+The significance of this difference lies in the following example:
+\begin{verbatim}
+                  other node
+                 /
+            sense
+           /     \
+force field       powers
+\end{verbatim}
+Suppose there is a young, upstream salmon at \texttt{force field} and a mature, downstream salmon at \texttt{other node}.
+During the down fish tick (see next section), the mature fish will move down to \texttt{sense}. This will immediately
+block electricity to \texttt{force field}, allowing the young fish to move up to \texttt{sense} in the fish tick up. If
+the power
+state of each node was calculated only during the power state, the behaviour of this example would be different (the
+young salmon would be stuck until the next turn).
+
+\subsection{Fish tick}
+
+The fish tick is divided into 3 stages:
+
+\subsubsection{Fish tick down}
+
+This part of the fish tick only affects downstream salmon. Each downstream salmon is moved to the parent of its current
+node if it is not blocked from doing so. If its current node is the mouth of the river, the salmon is removed from the
+river system and its name is printed to the terminal.
+
+This tick propagates in a pre-order fashion.
+
+\subsubsection{Fish tick up}
+
+This part of the fish tick only affects upstream salmon. For each upstream salmon, an in-order search of the river system
+is conducted in order\footnote{heh heh. Sorry.} to find a river node with the same name as the salmon. If there is such
+a node and the salmon is not prevented from moving towards it, the salmon moves towards that node. If there is no such node
+or if the salmon is prevented from moving towards that node, the salmon will attempt to move (in order) to each child of
+the current node. If the salmon cannot move to any child of the current node or if there are no children of the current
+node, the salmon will spawn at the current node.
+
+When a salmon spawns, it becomes mature and its direction becomes downstream. A new salmon is created at the current node.
+The new salmon is young, downstream and its name is the name of the current node.
+
+This tick propagates in a post-order fashion.
+
+\subsubsection{Fish tick hatch}
+
+This tick activates hatcheries. It propagates in a pre-order fashion.
+
+\subsubsection{Miscellaneous tick}
+
+All other nodes that need to perform some action perform it in this tick, which propagates in a pre-order fashion.
+
+\subsubsection{Input tick}
+
+If any input is available on the terminal, an upstream, mature fish is created at the mouth of the river with the input
+text as its name.
+
+\subsubsection{Additional notes}
+
+When a fish is added to a node, it is added at the head of that node's salmon list. Therefore, if a list of salmon move
+in unison, its order is reversed at every step.
+
+\section{Reference}
+
+\subsection{Terminology}
+
+We say a node ``blocks water'' if water is prevented from entering it.
+
+We say a node ``blocks snow'' if snow is prevented from entering it.
+
+We say a node ``blocks salmon'' if salmon are prevented from \emph{leaving} it. We say a node ``very blocks''
+salmon if salmon are prevented from entering it.
+
+We say a node ``blocks power'' if it is considered to be unpowered even if it has a child which is powered.
+
+\subsection{Node Reference}
+
+\label{sec:nodes}
+This is a list of all the node types that can be located on rivers.
+
+\subsubsection{hatchery}
+
+When powered, creates a mature, upstream salmon named ``homeless''. Operates during the
+fish tick hatch step.
+
+\subsubsection{hydro power}
+
+
+Creates electricity when watered. Can be destroyed by snowmelt.
+
+\subsubsection{snowmelt}
+
+Creates a snowmelt at the end of each snow tick.
+
+\subsubsection{shallows}
+
+Mature salmon take two turns to pass through.
+
+\subsubsection{rapids}
+
+Young salmon take two turns to pass through.
+
+\subsubsection{append down}
+
+For each downstream salmon that did not arrive from the first child, destroy that salmon and append its name
+to each downstream salmon that did arrive from the first child.
+
+\subsubsection{bear}
+
+Eats mature salmon.
+
+\subsubsection{force field}
+
+Blocks water, snowmelt and salmon when powered.
+
+\subsubsection{sense}
+
+Blocks electricity when mature salmon are present.
+
+\subsubsection{clone}
+
+For each salmon, create a young, downstream salmon with the same name.
+
+\subsubsection{young bear}
+
+Eats every other mature salmon (the first mature salmon gets eaten, the second one doesn't, etc.). Young salmon are moved
+to the beginning of the list because they don't have to take the
+time to evade the bear.
+
+\subsubsection{bird}
+
+Eats young salmon.
+
+\subsubsection{upstream killing device}
+
+When powered and if it contains more than one child,
+kills all the salmon in the last child.
+
+\subsubsection{waterfall}
+
+Blocks upstream salmon.
+
+\subsubsection{universe}
+
+If destroyed by a snowmelt, the program terminates. The program is terminated in the miscellaneous tick following the snow tick in which the Universe is
+destroyed.
+
+\subsubsection{powers}
+
+Generates power.
+
+\subsubsection{marshy}
+
+Snowmelts take two turns to pass through.
+
+\subsubsection{insulated}
+
+Blocks power.
+
+\subsubsection{upstream sense}
+
+Blocks the flow of electricity when upstream, mature salmon are present.
+
+\subsubsection{downstream sense}
+
+Blocks the flow of electricity when downstream, mature salmon are present.
+
+\subsubsection{evaporates}
+
+Blocks water and snowmelt when powered.
+
+\subsubsection{youth fountain}
+
+Makes all salmon young.
+
+\subsubsection{oblivion}
+
+When powered, changes the name of each salmon to ``''. Can be destroyed by snowmelt.
+
+\subsubsection{pump}
+
+Very blocks salmon unless powered.
+
+\subsubsection{range sense}
+
+Blocks electricity when mature salmon are here or upstream.
+
+\subsubsection{fear}
+
+Very blocks salmon when powered.
+
+\subsubsection{reverse up}
+
+For each downstream salmon that arrived from the second child, move it to the first child unless it is prevented from moving
+there.
+
+\subsubsection{reverse down}
+
+For each downstream salmon that arrived from the first child, move it to the second child unless it is prevented from moving
+there.
+
+\subsubsection{time}
+
+Makes all salmon mature.
+
+\subsubsection{lock}
+
+Very blocks downstream salmon and blocks snowmelt when powered.
+
+\subsubsection{inverse lock}
+
+Very blocks downstream salmon and blocks snowmelt when not powered.
+
+\subsubsection{young sense}
+
+Blocks electricity when young salmon are present.
+
+\subsubsection{switch}
+
+Blocks electricity unless mature salmon are present.
+
+\subsubsection{young switch}
+
+Blocks electricity unless young salmon are present.
+
+\subsubsection{narrows}
+
+Very blocks salmon if another salmon is present.
+
+\subsubsection{append up}
+
+For each downstream salmon that did not arrive from the first child, destroy that salmon and append its name
+to each upstream salmon.
+
+\subsubsection{young range sense}
+
+Blocks electricity when young salmon are here or upstream.
+
+\subsubsection{net}
+
+Very blocks mature salmon.
+
+\subsubsection{force down}
+
+For each downstream salmon that arrived from the first child, move it to the second child unless it is prevented from moving
+there.
+
+Also blocks upstream salmon from moving to the last child.
+
+\subsubsection{force up}
+
+For each downstream salmon that arrived from the second child, move it to the first child unless it is prevented from moving
+there.
+
+Also blocks upstream salmon from moving to the first child.
+
+\subsubsection{spawn}
+
+When powered, makes all salmon upstream spawn.
+
+\subsubsection{power invert}
+
+This node is powered if and only if none of its children are powered. Can be destroyed by snowmelt.
+
+\subsubsection{current}
+
+Very blocks young salmon.
+
+\subsubsection{bridge}
+
+If destroyed by snowmelt, blocks snowmelt and water and very blocks salmon.
+
+\subsubsection{split}
+
+Splits each salmon into a new salmon for each letter in the original salmon's name. The original salmon are destroyed.
+
+\subsubsection{range switch}
+
+Blocks electricity unless mature salmon are here or upstream.
+
+\subsubsection{young range switch}
+
+Blocks electricity unless young salmon are here or upstream.
+
+\section{Examples}
+
+The first example program is the simplest useful Homespring program:
+
+\begin{verbatim*}
+
+\end{verbatim*}
+
+This program is similar to the cat utility, but it doesn't print the newlines like cat irrationally does. Here is a version of the inferior old cat utility:
+
+\begin{verbatim*}
+
+.
+\end{verbatim*}
+
+Here are several possible implementations of the important and useful UNIX utility `hello'. This is the simplest possible one:
+
+\begin{verbatim*}
+Universe bear hatchery Hello. World!.
+ Powers   marshy marshy snowmelt
+\end{verbatim*}
+
+This is the same program written in professional style, with a more cohesive sentence structure:
+
+\begin{verbatim*}
+Universe of bear hatchery says Hello. World!.
+ It   powers     the marshy things;
+the power of the snowmelt overrides.
+\end{verbatim*}
+
+Here's the alternative, more complicated and less efficient preferred method:
+
+\begin{verbatim*}
+Universe of marshy force. Field sense
+shallows the hatchery saying Hello,. World!.
+ Hydro. Power spring  sometimes; snowmelt
+      powers   snowmelt always.
+\end{verbatim*}
+
+This is the somewhat less common but still often useful, ``Hi. What's your name? Hi, xxx!'' program.
+
+\begin{verbatim*}
+Universe marshy now. The marshy stuff evaporates downstream. Sense rapids
+upstream. Killing. Device downstream. Sense shallows and say Hi,. 
+   That powers the     force. Field sense shallows hatchery power.
+Hi .. What's. your. name?. 
+  Hydro. Power spring  when snowmelt then       powers
+    insulated bear hatchery !.
+ Powers felt;       powers feel     snowmelt themselves.
+\end{verbatim*}
+
+This program tests whether the user knows what six times four is, and get this: the \textit{program} knows what six times four is!
+
+\begin{verbatim*}
+Universe alive with youth. Fountain bear Marshy
+evaporates downstream. Sense rapids
+upstream. Killing. Device downstream. Sense shallows you. lie!.
+ Powers   force. Field sense shallows the hatchery but
+what's. six. times. four?. 
+  Hydro. Power spring  with snowmelt which has
+       powers enough.
+        It powers    snowmelt at least.
+       Marshy lock upstream. Sense bear now.
+24  powers drive   snowmelt away.
+   Insulated bear hatchery time, rightyo!.
+ HYDRO. Power spring  with snowmelt first.
+\end{verbatim*}
+
+\newpage
+This extremely powerful program can actually add two arbitrary digits together, in only twenty seconds or so on a fast machine!:
+
+\begin{verbatim*}
+Universe is marshy but evaporates downstream. Sense the rapids reverse. Down
+bridge is now marsh:
+Marshy marshy marshy marshy marshy marshy marshy marshy marshy marshy now.
+All evaporates downstream. Sense
+the rapids now:
+Rapids rapids rapids rapids rapids rapids rapids rapids sensed.
+Ugh +. 
+ Take powers from                  snowmelt  therefore;
+                 the   current time is of youth. Fountain is young. Bear cannot
+reverse. Down inverse. Lock young. Switch young. Range. Switch clone to the
+switch itself. Now inverse. Lock narrows down:
+    Powers
+       to   append. Up go all young. Bear time evaporates
+then. Therefore:
+Spawn power. Invert evaporates it. Down force. Down reverse. Down net. The
+ net reverses force.
+Now try:
+Add add add add add add add now.
+It is not possible; now count:
+0.
+1.
+2.
+3.
+4.
+5.
+6.
+7.
+8.
+9.
+10.
+11.
+12.
+13.
+14.
+15.
+16.
+17.
+18+.
+                                    You   can   now   pump
+in reverse. Down lock goes; narrows lock down:
+Inverse. Lock young. Range. Sense 0n 1n 2n 3n 4n 5n 6n 7n 8n 9n
+          Powers         lock time now.
+Inverse. Lock young. Range. Sense 0n 1n 2n 3n 4n 5n 6n 7n 8n 9n
+          Powers            snowmelt   now.
+    Powers
+      all:
+Bear hatchery n
+ powers
+               insulated bear hatchery ?. 
+ Hydro. Power spring as
+ snowmelt         powers   snowmelt  then, and disengage.
+HYDRO!!
+\end{verbatim*}
+
+\newpage
+This program is the language's name. It prints a bunch of various stuff:
+
+\begin{verbatim*}
+Hatchery
+Oblivion through
+Marshy
+Energy from
+Snowmelt
+Powers
+Rapids
+Insulated but
+Not
+Great
+\end{verbatim*}
+
+You can see that Homespring programs have a very poetic and expressive quality. Although it is said that artists must suffer for their work, this does not apply to HOtMEfSPRIbNG as suffering is not included among its features. Writing programs in any one of the flawed `other' languages is a painful and disturbing ordeal that is best avoided at all costs. 
+
+\end{document}

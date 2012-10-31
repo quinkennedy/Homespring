@@ -1,0 +1,436 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="content-type"
+ content="text/html; charset=ISO-8859-1">
+  <title>Homespring: Tutorial</title>
+</head>
+<body>
+<span style="font-weight: bold;">Homespring Tutorial:</span><span
+ style="font-style: italic;"> "A step-by-step guide into insanity"<br>
+</span><a href="mailto:jbinder@members.fsf.org">Jeff Binder</a> | <a
+ href="hs.html">Homespring Home</a><br>
+<br>
+<br>
+<span style="text-decoration: underline;">Introduction</span><br>
+<br>
+If you are new to programming, you should probably start somewhere
+else. This is not intended to be a usable language, and it may
+permanately sour you on programming. It is in no way representative of
+what programming is like. This tutorial assumes you know some real
+language already. You have been warned. Your milage may vary. May cause
+birth defects.<br>
+<br>
+Before you can start writing Homespring code, you need to understand
+its lexical structure, that is, the meanings of various characters.
+It's pretty simple; programs are divided into tokens seperated by
+single spaces or newlines. So the program<br>
+<br>
+<span style="font-family: monospace;">Hello, world</span><br>
+<br>
+contains two tokens, 'Hello,' and 'world'. If you double the space
+inbetween the words there, you will create a blank token inbetween
+'Hello' and 'World'. These blank tokens have a special meaning that
+we'll get to later. So remember that tokens are seperated by a <span
+ style="font-style: italic;">single</span> space. Two spaces is not the
+same as one space.<br>
+<br>
+Tokens can also be seperated by newlines, so this<span
+ style="font-family: monospace;"><br>
+<br>
+Hello,<br>
+world</span><br>
+<br>
+is equivalent to the above. Now what if you want a space in a token?
+You have to escape it using a period ('.'). So this<br>
+<span style="font-family: monospace;"><br>
+Hello,. world</span><br>
+<br>
+is interpreted as one token, 'Hello, world'. If you happen to want an
+actual period in a token, you need to escape it too. But as it so
+happens, periods are escaped with spaces. So,<br>
+<br>
+<span style="font-family: monospace;">Hello,. world .</span><br>
+<br>
+means 'Hello, world.'. Finally, if you want to put a newline in a
+token, use a period that is not followed or preceded by a space. So to
+put a newline at the end of that Hello World token, do this:<br>
+<br>
+<span style="font-family: monospace;">Hello,. world ..</span><br>
+<br>
+But, of course, if you put another token after that, the period is
+instead used to escape the space, making them one token. To get around
+this, you need to put all tokens that end in newlines at the end of a
+line, and all tokens that begin in newlines at the beginning. And if
+you want a token that's just a newline, use a period on a line by
+itself.<br>
+<br>
+So what happens when you have a program containing space-dot-space or
+dot-space-dot? Who knows?<br>
+<br>
+<br>
+<span style="text-decoration: underline;">Program Structure</span><br>
+<br>
+All HS programs take the form of trees. The way the tokens are put
+together into a tree is kind of unusual. Let's look at an example:<br>
+<br>
+<span style="font-family: monospace;">a b c</span><br>
+<br>
+This program is parsed into this tree:<br>
+<span style="font-family: monospace;"><br>
+&nbsp;&nbsp;&nbsp; c<br>
+&nbsp;&nbsp; /<br>
+&nbsp; b<br>
+&nbsp;/<br>
+a<br>
+<br>
+</span>As you see, each token is a child of the preceding token. To
+change this, you have to use the special blank tokens, which tell the
+parser to move up a level. So:<span style="font-family: monospace;"><br>
+<br>
+</span><span style="font-family: monospace;">a b&nbsp; c</span><span
+ style="font-family: monospace;"></span><br>
+<br>
+becomes:<br>
+<span style="font-family: monospace;"><br>
+&nbsp; b<br>
+&nbsp;/<br>
+a<br>
+&nbsp;\<br>
+&nbsp; c<br>
+<br>
+</span>If the parser can't move down any more, the blank token is just
+treated like a normal token. So yes, every possible string of characters
+is a valid Homespring program! Also, it should be noted that the null
+program (that is, a completely blank program) is special. When this
+program is run, the interpreter prints the message 'In Homespring, the
+null program is not a quine.' and exits.<br>
+<br>
+The program we'll be looking at in the next section:<br>
+<br>
+<span style="font-family: monospace;">bear hatchery Hello,. World ..<br>
+&nbsp;powers<br>
+</span><br>
+Is interpreted as:<br>
+<span style="font-family: monospace;"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+ style="font-family: monospace;">Hello, world.\n</span><br>
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+/<br>
+&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: monospace;">hatchery<br>
+&nbsp;&nbsp;&nbsp; /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \<br>
+</span> <span style="font-family: monospace;">bear&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+ style="font-family: monospace;">powers</span><br>
+<br>
+<br>
+<span style="text-decoration: underline;">What This Does</span><br>
+<br>
+The basic idea here is that of salmon. Yes, <a
+ href="http://www.riverdale.k12.or.us/salmon.htm">salmon</a>. The
+program is a tree or rivers that flow out into the ocean. In our
+example program, the 'bear' is at the point where the river flows out
+into the ocean. The ocean represents the input and output streams.<br>
+<br>
+Now back to the salmon. Whenever a line of input is read, it is
+encapsulated in a salmon. This salmon swims upstream looking for its
+home, the place where it hatched. Once it reaches its home, it spawns.
+The salmon's value (the line of input that it represents) determines
+which node is its home. So if the salmon's value is 'Hello, World.\n',
+its home is that node.<br>
+<br>
+Salmon that can't find their home just go as far as they can to the top
+side of the tree, until they can go no further. They spawn there.<br>
+<br>
+When a salmon spawns, it creates a new salmon. This salmon has the
+value of the spring where it was hatched, regardless of its parent's
+value. Also, the new salmon is <span style="font-style: italic;">young</span>.
+This can affect a number of things, as we shall see. If the salmon that
+spawns is young, it becomes <span style="font-style: italic;">mature</span>
+(not young). Anyway, both salmon now swim downstream, until they reach
+the ocean. Once they do, their values are output.<br>
+<br>
+The salmon have a specified order in the list, and they are output in
+that order. New salmon are inserted at the beginning of the list. Oddly
+enough, the order of the list is reversed every time they enter a new
+node.<br>
+<br>
+So what does our example program do?<br>
+<br>
+The first node is a 'bear'. We'll get to that later, because the
+program really starts with the 'powers'.<br>
+<br>
+'powers' generates electricity. Everything downstream of the 'powers'
+node gets power, unless the electricity is blocked somehow.<br>
+<br>
+'hatchery' is the main thing here. It keeps creating new salmon
+whenever it's powered. These salmon are mature, have the value
+'homeless' and immediately swim upstream like an input salmon.<br>
+<br>
+Since there is no node called 'homeless', the salmon just swims up the
+top branch, and stops at 'Hello, world.\n' Here it spawns. So now there
+are two salmon there, a mature one called 'homeless' and a young one
+called 'Hello, world.\n'.<br>
+<br>
+The 'Hello, world!\n' node is a <span style="font-style: italic;">spring</span>.
+Any node that isn't a keyword is a spring. Springs generate water,
+which flows downstream. Water doesn't enter into this program (it's
+assumed that there's always enough for salmon to swim), but it needed
+to be mentioned somewhere.<br>
+<br>
+These two salmon now swim downstream. Before long they reach 'bear'.
+'bear' eats mature salmon. Young salmon are too small for bears. So now
+only the 'Hello, world.\n' salmon is left. It exits and its value is
+displayed.<br>
+<br>
+Of course, all this while, the hatchery is still doing its thing, so
+the program prints 'Hello, world.\n' ad infinitum. We'll fix that next.<br>
+<br>
+<br>
+<span style="text-decoration: underline;">Making a Program that
+Actually Ends</span><br>
+<br>
+Here it is:<br>
+<br>
+<span style="font-family: monospace;">universe bear hatchery Hello,.
+world!.</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;powers&nbsp;&nbsp; marshy
+marshy snowmelt</span><br>
+<br>
+or<br>
+<span style="font-family: monospace;"></span><br>
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+ style="font-family: monospace;">Hello, world!</span><br>
+<span style="font-family: monospace;">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp;&nbsp; /</span><br>
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; &nbsp; &nbsp; hatchery<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+\&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+ style="font-family: monospace;">snowmelt</span><br>
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+bear&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+powers&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /&nbsp;&nbsp;&nbsp;
+\&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+marshy<br>
+universe&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; marshy _________ /</span><br>
+<br>
+This is the same as the other program, but with a few things added. The
+'snowmelt' node creates snowmelt, which flows downstream like water. It
+destroys certain things.<br>
+<br>
+The 'marshy' nodes slow down snowmelt, so it takes two ticks for it to
+pass through them.<br>
+<br>
+The 'universe' is the entire cosmos of the program. It can be smashed
+up by snowmelt. So when snowmelt hits it, the program ends. It is timed
+so it ends just after the first 'Hello, world!\n' message makes it out.<br>
+<br>
+It should be noted that snowmelt is updated first, then water, then
+electricity, then salmon, then special things like bear.<br>
+<br>
+<br>
+<span style="text-decoration: underline;">Embellishment</span><br>
+<br>
+This program works, but it doesn't really have complete sentences. It's
+better written like this:<br>
+<br>
+<span style="font-family: monospace;">Universe of bear hatchery says
+Hello. World!.</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;It&nbsp;&nbsp;
+powers&nbsp;&nbsp;&nbsp;&nbsp; the marshy things;</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">the power of the snowmelt overrides.</span><br>
+<br>
+This program is functionally equivalent, but it looks like a strange
+poem. That is considered a Good Thing is HS terms.<br>
+<br>
+One last note: some keywords have spaces in them. Remember to escape
+them with periods.<br>
+<br>
+<br>
+<span style="text-decoration: underline;">Reference</span><br>
+<br>
+Here are all of the keywords:<br>
+<br>
+<br>
+<span style="font-weight: bold;">Electric Generators</span><br>
+<span style="font-style: italic;">powers</span><span
+ style="font-style: italic;"></span><br>
+This was described above.<br>
+<br style="font-style: italic;">
+<span style="font-style: italic;">hydro power</span><br>
+Generates electricity only when supplied with water. This can be
+destroyed by <span style="font-style: italic;">snowmelt</span>.<br>
+<br>
+<span style="font-style: italic;">power invert</span><br>
+Blocks electricity; generates electricity when not powered. This can be
+destroyed by <span style="font-style: italic;">snowmelt</span>.<br>
+<br>
+<br>
+<span style="font-weight: bold;">Slowing</span><br>
+<span style="font-style: italic;">marshy</span><span
+ style="font-style: italic;"></span><br>
+This was described above.<br>
+<br>
+<span style="font-style: italic;">shallows</span><br>
+Similar to <span style="font-style: italic;">marshy</span>, but it
+affects mature salmon.<br>
+<br>
+<span style="font-style: italic;">rapids</span><br>
+Similar to <span style="font-style: italic;">shallows</span>, but for
+young salmon.<br>
+<br>
+<br>
+<span style="font-weight: bold;">Destruction</span><br>
+<span style="font-style: italic;">bear</span><span
+ style="font-style: italic;"></span><br>
+This was described above.<span style="font-style: italic;"></span><br>
+<br>
+<span style="font-style: italic;">young bear</span><br>
+Like a bear, but only kills every other mature fish.<br>
+<br>
+<span style="font-style: italic;">bird</span><br>
+Like a bear, but kills young fish.<br>
+<br>
+<span style="font-style: italic;">upstream killing device</span><br>
+Kills salmon in the node up the bottom branch when powered.<br>
+<br>
+<br>
+<span style="font-weight: bold;">Blocking</span><br
+ style="font-style: italic;">
+<span style="font-style: italic;">net</span><br>
+Blocks mature salmon.<br>
+<br>
+<span style="font-style: italic;">current</span><br>
+Blocks young salmon.<br>
+<br>
+<span style="font-style: italic;">insulated</span><br>
+Blocks electricity.<br>
+<br>
+<span style="font-style: italic;">force field</span><br>
+Blocks everything when powered. Things can enter it, but they can't
+pass through it.<br>
+<br>
+<span style="font-style: italic;">bridge</span><br>
+Blocks everything if it is destroyed by snowmelt.<br>
+<br>
+<span style="font-style: italic;">waterfall</span><br>
+Blocks fish moving upstream. They can enter it, but they can't pass
+through it. As such they will spawn at the <span
+ style="font-style: italic;">waterfall</span>.<br>
+<br>
+<span style="font-style: italic;">evaporates</span><br>
+Blocks water and snowmelt when powered.<br>
+<br>
+<span style="font-style: italic;">pump</span><br>
+Fish can only enter this node when it is powered.<br>
+<br>
+<span style="font-style: italic;">fear</span><br>
+Fish can not enter this node when it is powered.<br>
+<br>
+<span style="font-style: italic;">lock</span><br>
+Downstream salmon cannot enter this node when it is powered.<br>
+<br>
+<span style="font-style: italic;">inverse lock</span><br>
+Downstream salmon cannot enter this node unless it is powered.<br>
+<br style="font-style: italic;">
+<span style="font-style: italic;">narrows</span><br>
+Only one salmon can enter at a time.<br>
+<br>
+<br>
+<span style="font-weight: bold;">Sense and Switch</span><br>
+<span style="font-style: italic;">sense</span><br>
+Blocks electricity when at least one mature salmon is present.<br>
+<span style="font-style: italic;"></span><br>
+<span style="font-style: italic;">switch</span><br>
+Only allows electricity through when at least one mature salmon is
+present.<br>
+<br>
+<span style="font-style: italic;">upstream sense</span><br>
+<span style="font-style: italic;">downstream sense</span><br>
+Only work for fish going in the specified direction.<span
+ style="font-style: italic;"></span><br>
+<br>
+<span style="font-style: italic;">range sense</span><br>
+<span style="font-style: italic;">range switch</span><br>
+Detect fish in the node or anywhere upstream.<br>
+<br>
+<span style="font-style: italic;">young sense</span><br>
+<span style="font-style: italic;">young switch</span><br>
+<span style="font-style: italic;">young range sense</span><span
+ style="font-style: italic;"></span><br>
+<span style="font-style: italic;">young range switch</span><br>
+Work for young salmon instread of mature salmon.<br>
+<br>
+<br>
+<span style="font-weight: bold;">Salmon Age</span><br>
+<span style="font-style: italic;">youth fountain</span><br>
+Makes salmon young.<span style="font-style: italic;"></span><br>
+<br>
+<span style="font-style: italic;">time</span><br>
+Makes salmon mature.<br>
+<br>
+<br>
+<span style="font-weight: bold;">Reversal</span><br>
+<span style="font-style: italic;">reverse up</span><br>
+Send fish coming downstream from the lower branch up the upper branch.<br>
+<br>
+<span style="font-style: italic;">reverse down<br>
+</span>Send fish coming downstream from the upper branch up the lower
+branch.<br>
+<br>
+<span style="font-style: italic;">force up</span><br>
+Like <span style="font-style: italic;">reverse up</span>, except
+upstream salmon can't go up the upper branch.<br>
+<br>
+<span style="font-style: italic;">force down</span><br>
+Like <span style="font-style: italic;">reverse down</span>, except
+upstream salmon can't go up the lower branch.<br>
+<br>
+<br>
+<span style="font-weight: bold;">Special</span><br>
+<span style="font-weight: bold;"></span><span
+ style="font-style: italic;">hatchery</span><br>
+This was described above.<br>
+<br>
+<span style="font-style: italic;">snowmelt</span><br>
+This was described above.<br>
+<br>
+<span style="font-style: italic;">append down</span><br>
+Appends the values of fish coming down from the bottom branch in turn
+onto the end of the values of salmon coming down from the top branch.
+The salmon from the bottom are destroyed in the process.<br>
+<br>
+<span style="font-style: italic;">append up</span><br>
+Similar to <span style="font-style: italic;">append down</span> but the
+top and bottom branches are reversed.<br>
+<br>
+<span style="font-style: italic;">clone</span><br>
+Immediately creates a young copy of all salmon that pass through and
+sends them downstream. It doesn't affect the salmon that pass through.<br>
+<br>
+<span style="font-style: italic;">universe</span><br>
+This was described above.<br>
+<br>
+<span style="font-style: italic;">oblivion</span><br>
+When powered, changed the value of all salmon to ''. Can be destroyed
+by <span style="font-style: italic;">snowmelt</span>.<br>
+<br>
+<span style="font-style: italic;">spawn</span><br>
+When supplied with electricity, causes all fish upstream to spawn
+immediately. Be careful with this: it can lead to exponential growth!<br>
+<br>
+<span style="font-style: italic;">split</span><br>
+Splits each salmon into a salmon of each character of its value. They
+have the same maturity and direction as the salmon.<br>
+<br>
+<br>
+Copyright (C) 2003 Jeff Binder<br>
+<br>
+Verbatim copying and distribution of this entire article is permitted in any medium, provided this notice is preserved. 
+</body>
+</html>

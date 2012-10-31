@@ -1,0 +1,317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Homespring</title>
+</head>
+<body>
+<span style="font-weight: bold;">Homespring:</span><span
+ style="font-style: italic;"> "Because programming isn't like a river,
+but it damn well ought to be!"</span><br>
+<a href="mailto:jbinder@members.fsf.org">Jeff Binder</a><br>
+<br>
+<br>
+<span style="text-decoration: underline;">News</span><br>
+<br>
+4/15 - Minor update to the interpreter, standard and tutorial: Homespring
+now has a better way to deal with completely blank programs. An example of
+a completely blank program is now included (man, was that program easy to
+write). I also fixed a typo on this page.<br>
+<br>
+<br>
+<span style="text-decoration: underline;">What is Homespring?</span><br>
+<br>
+Homespring is a bizarre programming language in the spirit of&nbsp; <a
+ href="http://catb.org/%7Eesr/intercal/">INTERCAL</a> and <a
+ href="http://www.catseye.mb.ca/projects/befunge93-2003.0325/">Befunge</a>.
+It is designed to superficially resemble English, but hide beneath it a
+structure so needlessly complicated and ridiculously impractical that it
+brings tears to the eyes. Instead of being an excessively low-level
+language, like most of these efforts are, Homespring aims to be
+excessively high-level, as you shall see.<br>
+<br>
+<br style="text-decoration: underline;">
+<span style="text-decoration: underline;">What does the name mean?</span><br>
+<br>
+Homespring stands for Hatchery Oblivion through Marshy Energy from
+Snowmelt Powers Rapids Insulated but Not Great. Once you see the
+language you'll know why. One might also call it HOtMEfSPRIbNG, if one
+so desires. HS will do in a pinch.<br>
+<br>
+<br>
+<span style="text-decoration: underline;">What's it like?</span><br>
+<br>
+Programming in Homespring is hard, mainly because it is so different
+from other languages. The language closest to Homespring is <a
+ href="http://www.catseye.mb.ca/projects/hunter-2002.0126/">Hunter</a>,
+in that it relies on autonomous agents to carry information. Although
+unlike Hunter, HS has the environment changing the agents, not the other
+way around. HS also has an extremely rigid structure that you basically
+have to work around.<br>
+<br>
+As I've said, it's designed to resemble English. It doesn't cheat all
+that much either. Although it's case insensitive, the periods are
+lexically significant, and most of the words you see are actually
+keywords.<br>
+<br>
+Even though the most trivial programs can be fiendishly difficult to
+write in Homespring, programming it is still kind of interesting and
+fun. It's also fun to know you've written a working program that looks
+like the one just below.<br>
+<br>
+<br>
+<span style="text-decoration: underline;">Is it Turing-complete?</span><br>
+<br>
+Maybe. It hasn't been proven or disproven yet. It looks like it might be,
+or atleast it might be close. I plan to try and write a Turing-machine
+emulator in it next, so that will settle it.<br>
+<br>
+<br>
+<span style="text-decoration: underline;">What does it look like?</span><br>
+<br>
+Here's a simple program that copies input to output:<br>
+<br>
+<span style="font-family: monospace;">.</span><br
+ style="font-family: monospace;">
+<br>
+<br>
+(that's a period followed by a blank line.) OK, that's not a very good
+example. Here's a Hello World program written in Homespring:<br>
+<br>
+<span style="font-family: monospace;">Universe of bear hatchery says
+Hello. World!.</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;It&nbsp;&nbsp;
+powers&nbsp;&nbsp;&nbsp;&nbsp; the marshy things;</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">the power of the snowmelt overrides.</span><br>
+<br>
+Keep in mind that the spaces are all required.<span
+ style="font-family: monospace;"></span><br>
+<br>
+<br>
+<span style="text-decoration: underline;">What's it good for?</span><br>
+<br>
+Writing a program that copies input to output. Actually, it's so slow
+it's not very good for that.<span style="font-family: monospace;"></span><br>
+<br>
+<br>
+<span style="text-decoration: underline;">Then why?</span><br>
+<br>
+Why not?<br>
+<br>
+<br>
+<span style="text-decoration: underline;">What documentation is there<span
+ style="text-decoration: underline;">?</span></span><br>
+<br>
+There's the <a href="hs.pdf">Language Specification</a> (pdf; 100k), but it's
+not very useful as a tutorial or as a reference or as anything else.<br>
+<br>
+There's also the <a href="hstut.html">Tutorial</a>, which is your
+best bet.<br>
+<br>
+<br>
+<span style="text-decoration: underline;">How about some more examples?</span><br>
+<br>
+That's not really a question, but OK.<br>
+<br>
+Here's another Hello World:<br>
+<br>
+<span style="font-family: monospace;">Universe of marshy force. Field
+sense</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">shallows the hatchery saying
+Hello,. World!.</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;Hydro. Power spring&nbsp;
+sometimes; snowmelt</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+powers&nbsp;&nbsp; snowmelt always.</span><br>
+<br>
+Here's the 'Hi, what's your name?' 'Hi, $name!' program that's often
+seen in programming tutorials:<br>
+<br>
+<span style="font-family: monospace;">Universe marshy now. The marshy
+stuff evaporates downstream. Sense rapids</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">upstream. Killing. Device
+downstream. Sense shallows and say Hi,. </span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp; That powers
+the&nbsp;&nbsp;&nbsp;&nbsp; force. Field sense shallows hatchery power.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">Hi .. What's. your. name?. </span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp; Hydro. Power spring&nbsp;
+when snowmelt then&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; powers</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; insulated bear
+hatchery !.</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;Powers
+felt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; powers
+feel&nbsp;&nbsp;&nbsp;&nbsp; snowmelt themselves.</span><br>
+<br>
+This program asks the user a question and tells them whether they
+answered correctly.<br>
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">Universe alive with youth.
+Fountain bear Marshy</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">evaporates downstream. Sense
+rapids</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">upstream. Killing. Device
+downstream. Sense shallows you. lie!.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;Powers&nbsp;&nbsp; force.
+Field sense shallows the hatchery but</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">what's. six. times. four?. </span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp; Hydro. Power spring&nbsp;
+with snowmelt which has</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+powers enough.</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+It powers&nbsp;&nbsp;&nbsp; snowmelt at least.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Marshy lock upstream. Sense bear now.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">24&nbsp; powers drive&nbsp;&nbsp;
+snowmelt away.</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp; Insulated bear
+hatchery time, rightyo!.</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;HYDRO. Power spring&nbsp;
+with snowmelt first.</span><br>
+<br>
+And now, the tour de force, a program that adds two single-digit
+numbers together. When running it, make sure you wait for the prompts
+to enter the numbers, and keep in mind that it's VERY slow.<br>
+<br>
+<span style="font-family: monospace;">Universe is marshy but evaporates
+downstream. Sense the rapids reverse. Down</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">bridge is now marsh:</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">Marshy marshy marshy marshy
+marshy marshy marshy marshy marshy marshy now.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">All evaporates downstream. Sense</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">the rapids now:</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">Rapids rapids rapids rapids
+rapids rapids rapids rapids sensed.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">Ugh +. </span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;Take powers
+from&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+snowmelt&nbsp; therefore;</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+the&nbsp;&nbsp; current time is of youth. Fountain is young. Bear cannot</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">reverse. Down inverse. Lock
+young. Switch young. Range. Switch clone to the</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">switch itself. Now inverse. Lock
+narrows down:</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; Powers</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+to&nbsp;&nbsp; append. Up go all young. Bear time evaporates</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">then. Therefore:</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">Spawn power. Invert evaporates
+it. Down force. Down reverse. Down net. The</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;net reverses force.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">Now try:</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">Add add add add add add add now.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">It is not possible; now count:</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">0.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">1.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">2.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">3.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">4.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">5.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">6.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">7.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">8.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">9.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">10.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">11.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">12.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">13.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">14.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">15.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">16.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">17.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">18+.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+You&nbsp;&nbsp; can&nbsp;&nbsp; now&nbsp;&nbsp; pump</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">in reverse. Down lock goes;
+narrows lock down:</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">Inverse. Lock young. Range. Sense
+0n 1n 2n 3n 4n 5n 6n 7n 8n 9n</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Powers&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; lock time now.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">Inverse. Lock young. Range. Sense
+0n 1n 2n 3n 4n 5n 6n 7n 8n 9n</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Powers&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+snowmelt&nbsp;&nbsp; now.</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; Powers</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+all:</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">Bear hatchery n</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;powers</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+insulated bear hatchery ?. </span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;Hydro. Power spring as</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;snowmelt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+powers&nbsp;&nbsp; snowmelt&nbsp; then, and disengage.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">HYDRO!!</span><br>
+<br>
+<br>
+<span style="text-decoration: underline;">Downloads</span><br>
+<a href="hs.tar.bz2"><br>
+Download a tarball of everything</a> (tar.bz2; 72k). This includes an
+interpreter written in <a href="http://www.gnu.org/software/guile">Guile</a>
+<a href="http://www.schemers.org/">Scheme,</a> (which is a bit of a mess, but
+it works), the specification along with its <a 
+href="http://www.latex-project.org/">LaTeX</a> source, all of the example
+programs, and a copy of this Web site.<br>
+<br>
+<br>
+Copyright (C) 2003 Jeff Binder<br>
+<br>
+Verbatim copying and distribution of this entire article is permitted in any medium, provided this notice is preserved. 
+</body>
+</html>

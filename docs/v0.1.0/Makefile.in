@@ -1,0 +1,10 @@
+all: hs.pdf
+
+hs.pdf: hs.tex
+	@LATEX@ hs.tex
+	@LATEX@ hs.tex
+
+clean:
+	rm -f hs.pdf hs.aux hs.log
+
+install:
