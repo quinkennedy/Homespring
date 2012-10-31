@@ -6,7 +6,11 @@ var Salmon = require('./salmon'),
 	Spring = require('./spring'),
 	Marshy = require('./marshy'),
 	Snowmelt = require('./snowmelt'),
-	Powers = require('./powers');
+	Powers = require('./powers'),
+	HydroPower = require('./hydropower'),
+	Sense = require('./sense'),
+	Shallows = require('./shallows'),
+	ForceField = require('./forcefield');
 
 var Homespring = function(){
 	this.log = false;
@@ -24,7 +28,7 @@ Homespring.prototype.parse = function(a_sText){
 		Program.isNull = true;
 	}
 
-	a_sText = a_sText.replace("\r\n","\n");
+	a_sText = a_sText.replace(/\r\n/g,"\n");
 	if (this.log)
 		console.log(a_sText);
 	//first lets convert to all our tokens
@@ -116,7 +120,11 @@ Homespring.prototype.nodeMap = {
 	"universe":Universe,
 	"hatchery":Hatchery,
 	"powers":Powers,
-	"snowmelt":Snowmelt
+	"snowmelt":Snowmelt,
+	"hydro power":HydroPower,
+	"sense":Sense,
+	"shallows":Shallows,
+	"force field":ForceField
 };
 
 Homespring.prototype.getNode = function(a_sName){
@@ -189,7 +197,7 @@ Homespring.prototype.tickSnow = function(){
 
 Homespring.prototype.tickWater = function(){
 	//console.log("~~ tickWater");
-	this.runOrder(Program.root, "tickWater", true);
+	this.runOrder(Program.root, "tickWater", false);
 };
 
 Homespring.prototype.tickPower = function(){
@@ -243,6 +251,6 @@ if (!process.argv[2]) {
 		console.log("done");
 	} catch (e){
 		console.log("error while loading and running file:");
-		console.log(e);
+		console.log(e.stack);
 	}
 }

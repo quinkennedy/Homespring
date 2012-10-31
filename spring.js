@@ -5,7 +5,7 @@ node whose name is not a reserved name is a spring: it creates water.
 */
 var Spring = function(){
 	Node.call(this, 'Spring', false, false, false, false);
-	this.water = true;
+	this.water;
 };
 
 module.exports = Spring;

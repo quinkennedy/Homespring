@@ -21,8 +21,12 @@ Node.prototype.addUpstream = function(a_Node){
 	this.upstream.push(a_Node);
 };
 
+//override
+Node.prototype.preSnow = function(){};
+
 //post-order
 Node.prototype.tickSnow = function(){
+	this.preSnow();
 	//console.log(this.name);
 	if (!this.blockSnow){
 		for (var i = this.upstream.length - 1; i >= 0; i--) {
@@ -38,8 +42,12 @@ Node.prototype.tickSnow = function(){
 //override
 Node.prototype.postSnow = function(){};
 
+//override
+Node.prototype.preWater = function(){};
+
 //post-order
 Node.prototype.tickWater = function(){
+	this.preWater();
 	//console.log(this.name);
 	if (!this.blockWater){
 		for (var i = this.upstream.length - 1; i >= 0; i--) {
@@ -60,22 +68,29 @@ Node.prototype.tickPower = function(){
 	//console.log(this.name);
 };
 
+//override
+Node.prototype.preTickFishDown = function(){};
+
 //pre-order
 //this will push fish downstream
 Node.prototype.tickFishDown = function(){
+	this.preTickFishDown();
 	//console.log(this.name);
-	var currSalmon;
-	for (var i = this.salmon.length - 1; i >= 0; i--) {
-		currSalmon = this.salmon[i];
-		if (currSalmon.downstream){
-			if (this.downstream == undefined){
-				console.log(currSalmon.name);
-			} else {
-				this.downstream.salmon.push(currSalmon);
+	if (!this.blockSalmon){
+		var currSalmon;
+		for (var i = this.salmon.length - 1; i >= 0; i--) {
+			currSalmon = this.salmon[i];
+			if (currSalmon.downstream && this.shouldMoveSalmon(currSalmon)){
+				if (this.downstream == undefined){
+					console.log(currSalmon.name);
+					this.salmon.splice(i, 1);
+				} else if (!this.downstream.blockSalmonVery) {
+					this.downstream.addSalmon(currSalmon);
+					this.salmon.splice(i, 1);
+				}
 			}
-			this.salmon.splice(i, 1);
-		}
-	};
+		};
+	}
 	this.postTickFishDown();
 };
 
@@ -112,21 +127,25 @@ Node.prototype.hasPower = function(){
 	return false;
 };
 
+//override
+Node.prototype.preTickFishUp = function(){};
+
 //post-order
 Node.prototype.tickFishUp = function(){
+	this.preTickFishUp();
 	//console.log(this.name);
 	//if we are blocking salmon (blocking salmon from leaving)
 	//then all upstream salmon must spawn here
 	var currSalmon, salmonMoved;
 	for (var i = this.salmon.length - 1; i >= 0; i--) {
 		currSalmon = this.salmon[i]
-		if (!currSalmon.downstream){
+		if (!currSalmon.downstream && this.shouldMoveSalmon(currSalmon)){
 			salmonMoved = false;
 			//for each upstream fish, try to find a
 			//child node with that fish's name
 			for (var j = 0; j < this.upstream.length && !salmonMoved && !this.blockSalmon; j++) {
 				if (!this.upstream[j].blockSalmonVery && this.upstream[i].containsName(currSalmon.name)){
-					this.upstream[j].salmon.push(currSalmon);
+					this.upstream[j].addSalmon(currSalmon);
 					this.salmon.splice(i,1);
 					salmonMoved = true;
 					break;
@@ -138,7 +157,7 @@ Node.prototype.tickFishUp = function(){
 			//for each upstream fish, try to move to _any_ child node
 			for (var j = 0; j < this.upstream.length && !salmonMoved && !this.blockSalmon; j++) {
 				if (!this.upstream[j].blockSalmonVery){
-					this.upstream[j].salmon.push(currSalmon);
+					this.upstream[j].addSalmon(currSalmon);
 					this.salmon.splice(i,1);
 					salmonMoved = true;
 					break;
@@ -148,12 +167,32 @@ Node.prototype.tickFishUp = function(){
 				continue;
 			}
 			//spawn this salmon
+			//here we remove the curr salmon, and re-add it at the head
+			//but we may want to modify it in-place...
+			this.salmon.splice(i, 1);
 			currSalmon.mature = true;
 			currSalmon.downstream = true;
-			this.salmon.push(new Salmon(this.name, false, true));
+			this.addSalmon(currSalmon);
+			this.addSalmon(new Salmon(this.name, false, true));
 		}
 	};
 	this.postTickFishUp();
+};
+
+//override
+Node.prototype.shouldAddSalmon = function(a_Salmon){
+	return true;
+};
+
+Node.prototype.addSalmon = function(a_Salmon){
+	if (this.shouldAddSalmon(a_Salmon)){
+		this.salmon.push(a_Salmon);
+	}
+};
+
+//override
+Node.prototype.shouldMoveSalmon = function(a_Salmon){
+	return true;
 };
 
 //override
