@@ -1,13 +1,13 @@
-```node homespring.js &lt;filename> [debug] [limit]```
-&lt;filename> is required, and is the relative path to the file which contains the homespring program text
-[debug] is optional and should be '0', 'f', or 'false' in order to keep debugging disabled (default). Any other values will enable debug output
-[limit] is optional. If it is included, [debug] must be specified. This is used to limit the number of steps the interpreter will run before quitting regardless of program state.
+```node homespring.js <filename> [debug] [limit]```  
+```<filename>``` is required, and is the relative path to the file which contains the homespring program text  
+```[debug]``` is optional and should be '0', 'f', or 'false' in order to keep debugging disabled (default). Any other values will enable debug output  
+```[limit]``` is optional. If it is included, [debug] must be specified. This is used to limit the number of steps the interpreter will run before quitting regardless of program state.  
 
-examples:
-```node homespring.js examples/hello-3.hs```
-```node homespring.js examples/hello-1.hs true 10```
+examples:  
+```node homespring.js examples/hello-3.hs```  
+```node homespring.js examples/hello-1.hs true 10```  
 
-'done' is printed at the end of execution.
+'done' is printed at the end of execution.  
 This project is written in Nodejs. 
 
 
