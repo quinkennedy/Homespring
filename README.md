@@ -1,4 +1,10 @@
-This project is written in Nodejs. To run it currently, run "node homespring.js" and the hard-coded program will run. 'done' is printed at the end of execution.
+node homespring.js <filename> [debug] [limit]
+<filename> is required, and is the relative path to the file which contains the homespring program text
+[debug] is optional and should be '0', 'f', or 'false' in order to keep debugging disabled (default). Any other values will enable debug output
+[limit] is optional. If it is included, [debug] must be specified. This is used to limit the number of steps the interpreter will run before quitting regardless of program state.
+
+'done' is printed at the end of execution.
+This project is written in Nodejs. 
 
 
 from http://esolangs.org/wiki/Homespring
