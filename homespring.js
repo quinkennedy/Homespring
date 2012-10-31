@@ -7,25 +7,6 @@ var Salmon = require('./salmon'),
 	Marshy = require('./marshy'),
 	Snowmelt = require('./snowmelt'),
 	Powers = require('./powers');
-/*
-test0:
-
-
-test1:
-Universe bear hatchery Hello. World!.
- Powers   marshy marshy snowmelt
-
-test2:
-Universe of bear hatchery says Hello. World!.
- It   powers     the marshy things;
-the power of the snowmelt overrides.
-
-test3:
-Universe of marshy force. Field sense
-shallows the hatchery saying Hello,. World!.
- Hydro. Power spring  sometimes; snowmelt
-      powers   snowmelt always.
-*/
 
 var Homespring = function(){
 	this.log = false;
@@ -231,9 +212,32 @@ Homespring.prototype.tickInput = function(){
 	//Program.root.salmon.push(new Salmon('input', true, false));
 };
 
-h = new Homespring();
-h.parse([
-	"Universe bear hatchery Hello. World!.",
-	" Powers   marshy marshy snowmelt"].join('\n'));
-h.run(10);
-console.log("done");
+if (!process.argv[2]) {
+	console.log("you must include a filename for where to read the program from");
+	console.log("node homespring.js <filename> [debug] [num_iterations]");
+} else {
+	//fs used for file read/write
+	var fs = require("fs");
+	try{
+		var input = fs.readFileSync(process.argv[2], 'utf8').replace('\r\n','\n');
+		h = new Homespring();
+
+		if (process.argv[3] && process.argv[3] != '0' && process.argv[3].toLowerCase() != 'false' && process.argv[3].toLowerCase() != 'f'){
+			h.log = true;
+		}
+
+		h.parse(input);
+
+		var limit = undefined;
+		if (process.argv[4]){
+			limit = parseInt(process.argv[4]);
+			if (limit != limit)//NaN
+				limit = undefined;
+		}
+		h.run(limit);
+		console.log("done");
+	} catch (e){
+		console.log("error while loading and running file:");
+		console.log(e);
+	}
+}
