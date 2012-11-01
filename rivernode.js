@@ -144,7 +144,7 @@ Node.prototype.tickFishUp = function(){
 			//for each upstream fish, try to find a
 			//child node with that fish's name
 			for (var j = 0; j < this.upstream.length && !salmonMoved && !this.blockSalmon; j++) {
-				if (!this.upstream[j].blockSalmonVery && this.upstream[i].containsName(currSalmon.name)){
+				if (!this.upstream[j].blockSalmonVery && this.upstream[j].containsName(currSalmon.name)){
 					this.upstream[j].addSalmon(currSalmon);
 					this.salmon.splice(i,1);
 					salmonMoved = true;

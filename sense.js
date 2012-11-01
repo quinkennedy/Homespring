@@ -13,8 +13,12 @@ Sense.prototype = new Node('Sense', false, false, false, false);
 Sense.prototype.constructor = Sense;
 
 Sense.prototype.shouldAddSalmon = function(a_Salmon){
-	this.blockPower |= a_Salmon.mature;
+	this.blockPower |= this.doesThisSalmonBlockPower(a_Salmon);
 	return true;
+};
+
+Sense.prototype.doesThisSalmonBlockPower = function(a_Salmon){
+	return a_Salmon.mature;
 };
 
 Sense.prototype.postTickFishDown = function(){
@@ -28,6 +32,6 @@ Sense.prototype.postTickFishUp = function(){
 Sense.prototype.evalElectricity = function(){
 	this.blockPower = false;
 	for (var i = this.salmon.length - 1; i >= 0 && !this.blockPower; i--) {
-		this.blockPower |= this.salmon[i].mature;
+		this.blockPower |= this.doesThisSalmonBlockPower(this.salmon[i]);
 	};
 };

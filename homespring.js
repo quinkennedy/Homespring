@@ -7,10 +7,18 @@ var Salmon = require('./salmon'),
 	Marshy = require('./marshy'),
 	Snowmelt = require('./snowmelt'),
 	Powers = require('./powers'),
-	HydroPower = require('./hydropower'),
+	HydroPower = require('./hydro_power'),
 	Sense = require('./sense'),
 	Shallows = require('./shallows'),
-	ForceField = require('./forcefield');
+	ForceField = require('./force_field'),
+	Rapids = require('./rapids'),
+	Oblivion = require('./oblivion'),
+	Insulated = require('./insulated'),
+	Evaporates = require('./evaporates'),
+	DownstreamSense = require('./downstream_sense'),
+	UpstreamSense = require('./upstream_sense'),
+	YoungSense = require('./young_sense'),
+	UpstreamKillingDevice = require('./upstream_killing_device');
 
 var NotImplemented = function(){};
 NotImplemented.prototype = new Node();
@@ -132,7 +140,7 @@ Homespring.prototype.nodeMap = {
 	"hydro power":HydroPower,
 	"snowmelt":Snowmelt,
 	"shallows":Shallows,
-	"rapids":NotImplemented,//Young salmon take two turns to pass through.
+	"rapids":Rapids,//Young salmon take two turns to pass through.
 	"append down":NotImplemented,/*For each downstream salmon that did not arrive from the first child, destroy
 that salmon and append its name to each downstream salmon that did arrive
 from the first child.*/
@@ -144,18 +152,18 @@ from the first child.*/
 one doesn’t, etc.). Young salmon are moved to the beginning of the list because
 they don’t have to take the time to evade the bear.*/
 	"bird":NotImplemented,//Eats young salmon.
-	"upstream killing device":NotImplemented,/*When powered and if it contains more than one child, kills all the salmon in the
+	"upstream killing device":UpstreamKillingDevice,/*When powered and if it contains more than one child, kills all the salmon in the
 last child.*/
 	"waterfall":NotImplemented,//Blocks upstream salmon
 	"universe":Universe,
 	"powers":Powers,
 	"marshy":Marshy,
-	"insulated":NotImplemented,//Blocks power.
-	"upstream sense":NotImplemented,//Blocks the flow of electricity when upstream, mature salmon are present.
-	"downstream sense":NotImplemented,//Blocks the flow of electricity when downstream, mature salmon are present.
-	"evaporates":NotImplemented,//Blocks water and snowmelt when powered.
+	"insulated":Insulated,//Blocks power.
+	"upstream sense":UpstreamSense,//Blocks the flow of electricity when upstream, mature salmon are present.
+	"downstream sense":DownstreamSense,
+	"evaporates":Evaporates,
 	"youth fountain":NotImplemented,//Makes all salmon young.
-	"oblivion":NotImplemented,/*When powered, changes the name of each salmon to “”. Can be destroyed by
+	"oblivion":Oblivion,/*When powered, changes the name of each salmon to “”. Can be destroyed by
 snowmelt.*/
 	"pump":NotImplemented,//Very blocks salmon unless powered.
 	"range sense":NotImplemented,//Blocks electricity when mature salmon are here or upstream.
@@ -167,7 +175,7 @@ second child unless it is prevented from moving there.*/
 	"time":NotImplemented,//Makes all salmon mature
 	"lock":NotImplemented,//Very blocks downstream salmon and blocks snowmelt when powered.
 	"inverse lock":NotImplemented,//Very blocks downstream salmon and blocks snowmelt when not powered.
-	"young sense":NotImplemented,//Blocks electricity when young salmon are present.
+	"young sense":YoungSense,//Blocks electricity when young salmon are present.
 	"switch":NotImplemented,//Blocks electricity unless mature salmon are present.
 	"young switch":NotImplemented,//Blocks electricity unless young salmon are present.
 	"narrows":NotImplemented,//Very blocks salmon if another salmon is present.
