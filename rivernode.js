@@ -21,6 +21,10 @@ Node.prototype.addUpstream = function(a_Node){
 	this.upstream.push(a_Node);
 };
 
+Node.prototype.doesVeryBlockSalmon = function(a_Salmon){
+	return this.blockSalmonVery;
+};
+
 //override
 Node.prototype.preSnow = function(){};
 
@@ -84,7 +88,7 @@ Node.prototype.tickFishDown = function(){
 				if (this.downstream == undefined){
 					console.log(currSalmon.name);
 					this.salmon.splice(i, 1);
-				} else if (!this.downstream.blockSalmonVery) {
+				} else if (!this.downstream.doesVeryBlockSalmon(currSalmon)) {
 					this.downstream.addSalmon(currSalmon);
 					this.salmon.splice(i, 1);
 				}
@@ -144,7 +148,7 @@ Node.prototype.tickFishUp = function(){
 			//for each upstream fish, try to find a
 			//child node with that fish's name
 			for (var j = 0; j < this.upstream.length && !salmonMoved && !this.blockSalmon; j++) {
-				if (!this.upstream[j].blockSalmonVery && this.upstream[j].containsName(currSalmon.name)){
+				if (!this.upstream[j].doesVeryBlockSalmon(currSalmon) && this.upstream[j].containsName(currSalmon.name)){
 					this.upstream[j].addSalmon(currSalmon);
 					this.salmon.splice(i,1);
 					salmonMoved = true;
@@ -156,7 +160,7 @@ Node.prototype.tickFishUp = function(){
 			}
 			//for each upstream fish, try to move to _any_ child node
 			for (var j = 0; j < this.upstream.length && !salmonMoved && !this.blockSalmon; j++) {
-				if (!this.upstream[j].blockSalmonVery){
+				if (!this.upstream[j].doesVeryBlockSalmon(currSalmon)){
 					this.upstream[j].addSalmon(currSalmon);
 					this.salmon.splice(i,1);
 					salmonMoved = true;
@@ -208,15 +212,20 @@ Node.prototype.tickMisc = function(){
 	//console.log(this.name);
 };
 
-Node.prototype.logTree = function(a_nLevel){
-	a_nLevel = a_nLevel || 0;
+Node.prototype.logTree = function(a_barrMoreChildren){
+	a_barrMoreChildren = a_barrMoreChildren || [];
 	var output = '';
-	for (var i = a_nLevel - 1; i >= 1; i--) {
-		output += '| ';
+	for (var i = 0; i < a_barrMoreChildren.length - 1; i++) {
+		if (a_barrMoreChildren[i]){
+			output += '| ';
+		} else {
+			output += '  ';
+		}
 	};
-	if (a_nLevel > 0){
+	if (a_barrMoreChildren.length > 0){
 		output += '|_';
 	}
+
 	output += this.name.replace('\n','\\n');
 	output += (this.generatingPower ? ":P" : '');
 	output += (this.snow ? ":S" : '');
@@ -229,8 +238,13 @@ Node.prototype.logTree = function(a_nLevel){
 	output += (this.hasPower() ? ":p" : '');
 	output += "[" + this.salmon.toString() + "]";
 	console.log(output);
-	var nextLevel = a_nLevel + 1;
+	a_barrMoreChildren.push(true);
 	for (var i = 0; i < this.upstream.length; i++) {
-		this.upstream[i].logTree(nextLevel);
+		if (i == this.upstream.length - 1){
+			a_barrMoreChildren.pop();
+			a_barrMoreChildren.push(false);
+		}
+		this.upstream[i].logTree(a_barrMoreChildren);
 	};
+	a_barrMoreChildren.pop();
 };

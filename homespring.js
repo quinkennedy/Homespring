@@ -18,7 +18,13 @@ var Salmon = require('./salmon'),
 	DownstreamSense = require('./downstream_sense'),
 	UpstreamSense = require('./upstream_sense'),
 	YoungSense = require('./young_sense'),
-	UpstreamKillingDevice = require('./upstream_killing_device');
+	UpstreamKillingDevice = require('./upstream_killing_device'),
+	Switch = require('./switch'),
+	YoungSwitch = require('./young_switch'),
+	Bird = require('./bird'),
+	YoungBear = require('./young_bear'),
+	YouthFountain = require('./youth_fountain'),
+	Lock = require('./lock');
 
 var NotImplemented = function(){};
 NotImplemented.prototype = new Node();
@@ -148,10 +154,10 @@ from the first child.*/
 	"force field":ForceField,
 	"sense":Sense,
 	"clone":NotImplemented,//For each salmon, create a young, downstream salmon with the same name.
-	"young bear":NotImplemented,/*Eats every other mature salmon (the first mature salmon gets eaten, the second
+	"young bear":YoungBear,/*Eats every other mature salmon (the first mature salmon gets eaten, the second
 one doesn’t, etc.). Young salmon are moved to the beginning of the list because
 they don’t have to take the time to evade the bear.*/
-	"bird":NotImplemented,//Eats young salmon.
+	"bird":Bird,//Eats young salmon.
 	"upstream killing device":UpstreamKillingDevice,/*When powered and if it contains more than one child, kills all the salmon in the
 last child.*/
 	"waterfall":NotImplemented,//Blocks upstream salmon
@@ -162,7 +168,7 @@ last child.*/
 	"upstream sense":UpstreamSense,//Blocks the flow of electricity when upstream, mature salmon are present.
 	"downstream sense":DownstreamSense,
 	"evaporates":Evaporates,
-	"youth fountain":NotImplemented,//Makes all salmon young.
+	"youth fountain":YouthFountain,//Makes all salmon young.
 	"oblivion":Oblivion,/*When powered, changes the name of each salmon to “”. Can be destroyed by
 snowmelt.*/
 	"pump":NotImplemented,//Very blocks salmon unless powered.
@@ -173,11 +179,11 @@ first child unless it is prevented from moving there.*/
 	"reverse down":NotImplemented,/*For each downstream salmon that arrived from the first child, move it to the
 second child unless it is prevented from moving there.*/
 	"time":NotImplemented,//Makes all salmon mature
-	"lock":NotImplemented,//Very blocks downstream salmon and blocks snowmelt when powered.
+	"lock":Lock,//Very blocks downstream salmon and blocks snowmelt when powered.
 	"inverse lock":NotImplemented,//Very blocks downstream salmon and blocks snowmelt when not powered.
 	"young sense":YoungSense,//Blocks electricity when young salmon are present.
-	"switch":NotImplemented,//Blocks electricity unless mature salmon are present.
-	"young switch":NotImplemented,//Blocks electricity unless young salmon are present.
+	"switch":Switch,//Blocks electricity unless mature salmon are present.
+	"young switch":YoungSwitch,//Blocks electricity unless young salmon are present.
 	"narrows":NotImplemented,//Very blocks salmon if another salmon is present.
 	"append up":NotImplemented,/*For each downstream salmon that did not arrive from the first child, destroy
 that salmon and append its name to each upstream salmon.*/
