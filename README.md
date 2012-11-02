@@ -9,7 +9,10 @@ examples:
 ```node homespring.js examples/hello-3.hs```  
 ```node homespring.js examples/hello-1.hs true 10```  
 
-This project is written in Nodejs. 
+requirements
+===========
+download and install Node.js http://nodejs.org/  
+user input has not been tested on Windows  
 
 background
 ==========
