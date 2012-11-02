@@ -28,7 +28,7 @@ YoungBear.prototype.shouldAddSalmon = function(a_Salmon){
 	return true;
 };
 
-Node.prototype.addSalmon = function(a_Salmon){
+YoungBear.prototype.addSalmon = function(a_Salmon){
 	if (this.shouldAddSalmon(a_Salmon)){
 		if (!a_Salmon.mature){
 			this.salmon.push(a_Salmon);

@@ -28,7 +28,12 @@ var Node = require('./rivernode'),
 	Bridge = require('./bridge'),
 	Pump = require('./pump'),
 	Narrows = require('./narrows'),
-	Current = require('./current');
+	Current = require('./current'),
+	PowerInvert = require('./power_invert'),
+	ReverseDown = require('./reverse_down'),
+	ReverseUp = require('./reverse_up'),
+	ForceDown = require('./force_down'),
+	ForceUp = require('./force_up');
 
 /*
 Since Salmon is defined globally in salmon.js, we don't have to assign it to anything here.
@@ -40,8 +45,8 @@ require('./salmon');
 A dummy class that acts like a river node so that we can parse the program and 
 detect which nodes are not implemented yet.
  */
-var NotImplemented = function(){};
-NotImplemented.prototype = new Node();
+var NotImplemented = function(){Node.call(this, 'N.I.', false, false, false, false)};
+NotImplemented.prototype = new Node('N.I.', false, false, false, false);
 NotImplemented.prototype.constructor = NotImplemented;
 
 var Homespring = function(){
@@ -194,9 +199,9 @@ snowmelt.*/
 	"pump":Pump,//Very blocks salmon unless powered.
 	"range sense":NotImplemented,//Blocks electricity when mature salmon are here or upstream.
 	"fear":NotImplemented,//Very blocks salmon when powered.
-	"reverse up":NotImplemented,/*For each downstream salmon that arrived from the second child, move it to the
+	"reverse up":ReverseUp,/*For each downstream salmon that arrived from the second child, move it to the
 first child unless it is prevented from moving there.*/
-	"reverse down":NotImplemented,/*For each downstream salmon that arrived from the first child, move it to the
+	"reverse down":ReverseDown,/*For each downstream salmon that arrived from the first child, move it to the
 second child unless it is prevented from moving there.*/
 	"time":Time,//Makes all salmon mature
 	"lock":Lock,//Very blocks downstream salmon and blocks snowmelt when powered.
@@ -209,14 +214,14 @@ second child unless it is prevented from moving there.*/
 that salmon and append its name to each upstream salmon.*/
 	"young range sense":NotImplemented,//Blocks electricity when young salmon are here or upstream.
 	"net":NotImplemented,//Very blocks mature salmon
-	"force down":NotImplemented,/*For each downstream salmon that arrived from the first child, move it to the
+	"force down":ForceDown,/*For each downstream salmon that arrived from the first child, move it to the
 second child unless it is prevented from moving there.
 Also blocks upstream salmon from moving to the last child.*/
-	"force up":NotImplemented,/*For each downstream salmon that arrived from the second child, move it to the
+	"force up":ForceUp,/*For each downstream salmon that arrived from the second child, move it to the
 first child unless it is prevented from moving there.
 Also blocks upstream salmon from moving to the first child.*/
 	"spawn":NotImplemented,//When powered, makes all salmon upstream spawn.
-	"power invert":NotImplemented,/*This node is powered if and only if none of its children are powered. Can be
+	"power invert":PowerInvert,/*This node is powered if and only if none of its children are powered. Can be
 destroyed by snowmelt.*/
 	"current":Current,//Very blocks young salmon
 	"bridge":Bridge,//If destroyed by snowmelt, blocks snowmelt and water and very blocks salmon.
@@ -259,7 +264,7 @@ Homespring.prototype.cleanup = function(){
 };
 
 Homespring.prototype.step = function(){
-	if (Program.maxSteps != undefined && Program.currStep >= Program.maxSteps){
+	if (Program.quit || (Program.maxSteps != undefined && Program.currStep >= Program.maxSteps)){
 		Program.quit = true;
 	} else {
 		if (this.log){
@@ -384,6 +389,7 @@ if (!process.argv[2]) {
 		h.run(limit);
 	} catch (e){
 		console.log("error while loading and running file:");
+		console.log(e);
 		console.log(e.stack);
 	}
 }

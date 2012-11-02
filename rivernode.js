@@ -91,7 +91,7 @@ Node.prototype.tickFishDown = function(){
 					//console.log(currSalmon.name);
 					this.salmon.splice(i, 1);
 				} else if (!this.downstream.doesVeryBlockSalmon(currSalmon)) {
-					this.downstream.addSalmon(currSalmon);
+					this.downstream.addSalmon(currSalmon, this);
 					this.salmon.splice(i, 1);
 				}
 			}
@@ -117,8 +117,7 @@ Node.prototype.containsName = function(a_sName){
 	return false;
 };
 
-//check children if they have power
-Node.prototype.hasPower = function(){
+Node.prototype.implHasPower = function(){
 	if (this.generatingPower){
 		return true;
 	} else if (this.blockPower){
@@ -131,6 +130,11 @@ Node.prototype.hasPower = function(){
 		}
 	};
 	return false;
+};
+
+//check children if they have power
+Node.prototype.hasPower = function(){
+	return this.implHasPower();
 };
 
 //override
@@ -151,7 +155,7 @@ Node.prototype.tickFishUp = function(){
 			//child node with that fish's name
 			for (var j = 0; j < this.upstream.length && !salmonMoved && !this.blockSalmon; j++) {
 				if (!this.upstream[j].doesVeryBlockSalmon(currSalmon) && this.upstream[j].containsName(currSalmon.name)){
-					this.upstream[j].addSalmon(currSalmon);
+					this.upstream[j].addSalmon(currSalmon, this);
 					this.salmon.splice(i,1);
 					salmonMoved = true;
 					break;
@@ -163,7 +167,7 @@ Node.prototype.tickFishUp = function(){
 			//for each upstream fish, try to move to _any_ child node
 			for (var j = 0; j < this.upstream.length && !salmonMoved && !this.blockSalmon; j++) {
 				if (!this.upstream[j].doesVeryBlockSalmon(currSalmon)){
-					this.upstream[j].addSalmon(currSalmon);
+					this.upstream[j].addSalmon(currSalmon, this);
 					this.salmon.splice(i,1);
 					salmonMoved = true;
 					break;
@@ -178,8 +182,8 @@ Node.prototype.tickFishUp = function(){
 			this.salmon.splice(i, 1);
 			currSalmon.mature = true;
 			currSalmon.downstream = true;
-			this.addSalmon(currSalmon);
-			this.addSalmon(new Salmon(this.name, false, true));
+			this.addSalmon(currSalmon, this);
+			this.addSalmon(new Salmon(this.name, false, true), this);
 		}
 	};
 	this.postTickFishUp();
@@ -190,7 +194,7 @@ Node.prototype.shouldAddSalmon = function(a_Salmon){
 	return true;
 };
 
-Node.prototype.addSalmon = function(a_Salmon){
+Node.prototype.addSalmon = function(a_Salmon, a_Source){
 	if (this.shouldAddSalmon(a_Salmon)){
 		this.salmon.push(a_Salmon);
 	}
@@ -216,6 +220,8 @@ Node.prototype.tickMisc = function(){
 
 Node.prototype.logTree = function(a_barrMoreChildren){
 	a_barrMoreChildren = a_barrMoreChildren || [];
+	//console.log(this.name);
+	//console.log(a_barrMoreChildren.length);
 	var output = '';
 	for (var i = 0; i < a_barrMoreChildren.length - 1; i++) {
 		if (a_barrMoreChildren[i]){
@@ -240,6 +246,7 @@ Node.prototype.logTree = function(a_barrMoreChildren){
 	output += (this.hasPower() ? ":p" : '');
 	output += "[" + this.salmon.toString() + "]";
 	console.log(output);
+	console.log("fuck you");
 	a_barrMoreChildren.push(true);
 	for (var i = 0; i < this.upstream.length; i++) {
 		if (i == this.upstream.length - 1){
