@@ -9,7 +9,6 @@ examples:
 ```node homespring.js examples/hello-3.hs```  
 ```node homespring.js examples/hello-1.hs true 10```  
 
-'done' is printed at the end of execution.  
 This project is written in Nodejs. 
 
 background

@@ -23,7 +23,10 @@ var Node = require('./rivernode'),
 	Bird = require('./bird'),
 	YoungBear = require('./young_bear'),
 	YouthFountain = require('./youth_fountain'),
-	Lock = require('./lock');
+	Lock = require('./lock'),
+	Time = require('./time'),
+	Bridge = require('./bridge'),
+	Pump = require('./pump');
 
 /*
 Since Salmon is defined globally in salmon.js, we don't have to assign it to anything here.
@@ -186,14 +189,14 @@ last child.*/
 	"youth fountain":YouthFountain,//Makes all salmon young.
 	"oblivion":Oblivion,/*When powered, changes the name of each salmon to “”. Can be destroyed by
 snowmelt.*/
-	"pump":NotImplemented,//Very blocks salmon unless powered.
+	"pump":Pump,//Very blocks salmon unless powered.
 	"range sense":NotImplemented,//Blocks electricity when mature salmon are here or upstream.
 	"fear":NotImplemented,//Very blocks salmon when powered.
 	"reverse up":NotImplemented,/*For each downstream salmon that arrived from the second child, move it to the
 first child unless it is prevented from moving there.*/
 	"reverse down":NotImplemented,/*For each downstream salmon that arrived from the first child, move it to the
 second child unless it is prevented from moving there.*/
-	"time":NotImplemented,//Makes all salmon mature
+	"time":Time,//Makes all salmon mature
 	"lock":Lock,//Very blocks downstream salmon and blocks snowmelt when powered.
 	"inverse lock":NotImplemented,//Very blocks downstream salmon and blocks snowmelt when not powered.
 	"young sense":YoungSense,//Blocks electricity when young salmon are present.
@@ -214,7 +217,7 @@ Also blocks upstream salmon from moving to the first child.*/
 	"power invert":NotImplemented,/*This node is powered if and only if none of its children are powered. Can be
 destroyed by snowmelt.*/
 	"current":NotImplemented,//Very blocks young salmon
-	"bridge":NotImplemented,//If destroyed by snowmelt, blocks snowmelt and water and very blocks salmon.
+	"bridge":Bridge,//If destroyed by snowmelt, blocks snowmelt and water and very blocks salmon.
 	"split":NotImplemented,/*Splits each salmon into a new salmon for each letter in the original salmon’s
 name. The original salmon are destroyed.*/
 	"range switch":NotImplemented,//Blocks electricity unless mature salmon are here or upstream.
@@ -246,7 +249,11 @@ Homespring.prototype.cleanup = function(){
 		clearInterval(this.intervalId);
 	}
 	this.stdin.destroy();
-	console.log("done");
+	if (this.log){
+		console.log("done");
+	} else {
+		console.log();
+	}
 };
 
 Homespring.prototype.step = function(){

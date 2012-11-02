@@ -3,12 +3,12 @@ var Node = require('./rivernode');
 Makes all salmon young.
 */
 var YouthFountain = function(){
-	Node.call(this, 'YouthFountain', false, false, false, false);
+	Node.call(this, 'Youth Fountain', false, false, false, false);
 };
 
 module.exports = YouthFountain;
 
-YouthFountain.prototype = new Node('YouthFountain', false, false, false, false);
+YouthFountain.prototype = new Node('Youth Fountain', false, false, false, false);
 
 YouthFountain.prototype.constructor = YouthFountain;
 
