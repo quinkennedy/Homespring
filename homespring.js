@@ -27,7 +27,8 @@ var Node = require('./rivernode'),
 	Time = require('./time'),
 	Bridge = require('./bridge'),
 	Pump = require('./pump'),
-	Narrows = require('./narrows');
+	Narrows = require('./narrows'),
+	Current = require('./current');
 
 /*
 Since Salmon is defined globally in salmon.js, we don't have to assign it to anything here.
@@ -217,7 +218,7 @@ Also blocks upstream salmon from moving to the first child.*/
 	"spawn":NotImplemented,//When powered, makes all salmon upstream spawn.
 	"power invert":NotImplemented,/*This node is powered if and only if none of its children are powered. Can be
 destroyed by snowmelt.*/
-	"current":NotImplemented,//Very blocks young salmon
+	"current":Current,//Very blocks young salmon
 	"bridge":Bridge,//If destroyed by snowmelt, blocks snowmelt and water and very blocks salmon.
 	"split":NotImplemented,/*Splits each salmon into a new salmon for each letter in the original salmon’s
 name. The original salmon are destroyed.*/
