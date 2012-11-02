@@ -26,7 +26,8 @@ var Node = require('./rivernode'),
 	Lock = require('./lock'),
 	Time = require('./time'),
 	Bridge = require('./bridge'),
-	Pump = require('./pump');
+	Pump = require('./pump'),
+	Narrows = require('./narrows');
 
 /*
 Since Salmon is defined globally in salmon.js, we don't have to assign it to anything here.
@@ -202,7 +203,7 @@ second child unless it is prevented from moving there.*/
 	"young sense":YoungSense,//Blocks electricity when young salmon are present.
 	"switch":Switch,//Blocks electricity unless mature salmon are present.
 	"young switch":YoungSwitch,//Blocks electricity unless young salmon are present.
-	"narrows":NotImplemented,//Very blocks salmon if another salmon is present.
+	"narrows":Narrows,//Very blocks salmon if another salmon is present.
 	"append up":NotImplemented,/*For each downstream salmon that did not arrive from the first child, destroy
 that salmon and append its name to each upstream salmon.*/
 	"young range sense":NotImplemented,//Blocks electricity when young salmon are here or upstream.
