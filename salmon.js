@@ -5,5 +5,5 @@ global.Salmon = function(a_sName, a_bMature, a_bDownstream){
 };
 
 Salmon.prototype.toString = function(){
-	return this.name + (this.mature ? ":M" : ":y") + (this.downstream ? ":D" : ":u");
+	return this.name.replace('\n','\\n') + (this.mature ? ":M" : ":y") + (this.downstream ? ":D" : ":u");
 };

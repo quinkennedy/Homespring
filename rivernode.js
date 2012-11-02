@@ -86,7 +86,9 @@ Node.prototype.tickFishDown = function(){
 			currSalmon = this.salmon[i];
 			if (currSalmon.downstream && this.shouldMoveSalmon(currSalmon)){
 				if (this.downstream == undefined){
-					console.log(currSalmon.name);
+					//use stdout because console.log adds a newline
+					process.stdout.write(currSalmon.name);
+					//console.log(currSalmon.name);
 					this.salmon.splice(i, 1);
 				} else if (!this.downstream.doesVeryBlockSalmon(currSalmon)) {
 					this.downstream.addSalmon(currSalmon);

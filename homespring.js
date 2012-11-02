@@ -1,5 +1,4 @@
-var Salmon = require('./salmon'),
-	Node = require('./rivernode'),
+var Node = require('./rivernode'),
 	Bear = require('./bear'),
 	Universe = require('./universe'),
 	Hatchery = require('./hatchery'),
@@ -26,16 +25,30 @@ var Salmon = require('./salmon'),
 	YouthFountain = require('./youth_fountain'),
 	Lock = require('./lock');
 
+/*
+Since Salmon is defined globally in salmon.js, we don't have to assign it to anything here.
+However, we still need to import the file.
+ */
+require('./salmon');
+
+/*
+A dummy class that acts like a river node so that we can parse the program and 
+detect which nodes are not implemented yet.
+ */
 var NotImplemented = function(){};
 NotImplemented.prototype = new Node();
 NotImplemented.prototype.constructor = NotImplemented;
 
 var Homespring = function(){
 	this.log = false;
+	this.intervalId = undefined;
 };
 
 global.Program = {
 	root:undefined,
+	input:undefined,
+	maxSteps:undefined,
+	currStep:0,
 	isNull:false,
 	quit:false,
 	exit:function(){this.quit = true;}
@@ -137,7 +150,9 @@ Homespring.prototype.parse = function(a_sText){
 
 	if (this.log){
 		console.log("TREE:");
-		Program.root.logTree();
+		if (Program.root != undefined){
+			Program.root.logTree();
+		}
 	}
 };
 
@@ -219,33 +234,43 @@ Homespring.prototype.getNode = function(a_sName){
 Homespring.prototype.run = function(a_nLimit){
 	if (Program.isNull){
 		console.log("In Homespring, the null program is not a quine.");
+		this.cleanup();
 		return;
 	}
-	var i = 0;
-	while(!Program.quit){
-		if (this.log)
-			console.log("######################## " + i);
-		this.step();
-		if (this.log)
-			Program.root.logTree();
-		i++;
-		if (a_nLimit && a_nLimit <= i){
-			break;
-		}
+	Program.maxSteps = a_nLimit;
+	this.intervalId = setInterval(this.step.bind(this), 0);
+};
+
+Homespring.prototype.cleanup = function(){
+	if (this.intervalId != undefined){
+		clearInterval(this.intervalId);
 	}
+	this.stdin.destroy();
+	console.log("done");
 };
 
 Homespring.prototype.step = function(){
-	this.tickSnow();
-	this.tickWater();
-	this.tickPower();
-	this.tickFish();
-	this.tickMisc();
-	//the universe might have killed execution during the misc step
-	if (Program.quit){
-		return false;
+	if (Program.maxSteps != undefined && Program.currStep >= Program.maxSteps){
+		Program.quit = true;
+	} else {
+		if (this.log){
+			console.log("######################## " + Program.currStep);
+			Program.root.logTree();
+		}
+		this.tickSnow();
+		this.tickWater();
+		this.tickPower();
+		this.tickFish();
+		this.tickMisc();
+		//the universe might have killed execution during the misc step
+		if (!Program.quit){
+			this.tickInput();
+		}
+		Program.currStep++;
 	}
-	this.tickInput();
+	if (Program.quit){
+		this.cleanup();
+	}
 };
 
 Homespring.prototype.runOrder = function(a_Node, a_sFunc, a_bPost){
@@ -302,6 +327,12 @@ Homespring.prototype.tickInput = function(){
 	//console.log("~~ tickInput");
 	//handle user input to spawn salmon
 	//Program.root.salmon.push(new Salmon('input', true, false));
+	if (Program.input != undefined){
+		//we want to take off the ending newline
+		Program.input = Program.input.replace(/\n$/, '');
+		Program.root.addSalmon(new Salmon(Program.input, false, false));
+		Program.input = undefined;
+	}
 };
 
 if (!process.argv[2]) {
@@ -310,6 +341,7 @@ if (!process.argv[2]) {
 } else {
 	//fs used for file read/write
 	var fs = require("fs");
+
 	try{
 		var input = fs.readFileSync(process.argv[2], 'utf8').replace('\r\n','\n');
 		h = new Homespring();
@@ -326,8 +358,21 @@ if (!process.argv[2]) {
 			if (limit != limit)//NaN
 				limit = undefined;
 		}
+
+		//setup user input
+		//stdin used for user input
+		h.stdin = process.openStdin();
+		h.stdin.setEncoding('utf8');
+
+		/**
+		 * Here we process each line of input from the user
+		 * @param  {obj} command Some command object that I can .toString to get the raw user input
+		 */
+		h.stdin.on('data',function(command){
+			Program.input = command.toString();
+		});
+
 		h.run(limit);
-		console.log("done");
 	} catch (e){
 		console.log("error while loading and running file:");
 		console.log(e.stack);
