@@ -33,7 +33,9 @@ var Node = require('./rivernode'),
 	ReverseDown = require('./reverse_down'),
 	ReverseUp = require('./reverse_up'),
 	ForceDown = require('./force_down'),
-	ForceUp = require('./force_up');
+	ForceUp = require('./force_up'),
+	Clone = require('./clone'),
+	Split = require('./split');
 
 /*
 Since Salmon is defined globally in salmon.js, we don't have to assign it to anything here.
@@ -178,7 +180,7 @@ from the first child.*/
 	"bear":Bear,
 	"force field":ForceField,
 	"sense":Sense,
-	"clone":NotImplemented,//For each salmon, create a young, downstream salmon with the same name.
+	"clone":Clone,//For each salmon, create a young, downstream salmon with the same name.
 	"young bear":YoungBear,/*Eats every other mature salmon (the first mature salmon gets eaten, the second
 one doesn’t, etc.). Young salmon are moved to the beginning of the list because
 they don’t have to take the time to evade the bear.*/
@@ -225,7 +227,7 @@ Also blocks upstream salmon from moving to the first child.*/
 destroyed by snowmelt.*/
 	"current":Current,//Very blocks young salmon
 	"bridge":Bridge,//If destroyed by snowmelt, blocks snowmelt and water and very blocks salmon.
-	"split":NotImplemented,/*Splits each salmon into a new salmon for each letter in the original salmon’s
+	"split":Split,/*Splits each salmon into a new salmon for each letter in the original salmon’s
 name. The original salmon are destroyed.*/
 	"range switch":NotImplemented,//Blocks electricity unless mature salmon are here or upstream.
 	"young range switch":NotImplemented//Blocks electricity unless young salmon are here or upstream.

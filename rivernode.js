@@ -198,6 +198,10 @@ Node.prototype.addSalmon = function(a_Salmon, a_Source){
 	if (this.shouldAddSalmon(a_Salmon)){
 		this.salmon.push(a_Salmon);
 	}
+	this.postAddSalmon(a_Salmon);
+};
+
+Node.prototype.postAddSalmon = function(a_Salmon){
 };
 
 //override
@@ -246,7 +250,6 @@ Node.prototype.logTree = function(a_barrMoreChildren){
 	output += (this.hasPower() ? ":p" : '');
 	output += "[" + this.salmon.toString() + "]";
 	console.log(output);
-	console.log("fuck you");
 	a_barrMoreChildren.push(true);
 	for (var i = 0; i < this.upstream.length; i++) {
 		if (i == this.upstream.length - 1){
