@@ -12,7 +12,6 @@ examples:
 requirements
 ===========
 download and install Node.js http://nodejs.org/  
-user input has not been tested on Windows  
 
 background
 ==========

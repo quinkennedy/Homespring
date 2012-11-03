@@ -344,9 +344,13 @@ Homespring.prototype.tickInput = function(){
 	//handle user input to spawn salmon
 	//Program.root.salmon.push(new Salmon('input', true, false));
 	if (Program.input != undefined){
-		//we want to take off the ending newline
-		Program.input = Program.input.replace(/\n$/, '');
-		Program.root.addSalmon(new Salmon(Program.input, false, false));
+		//we want to take off the ending newline (and for windows the return)
+		Program.input = Program.input.replace(/\r{0,1}\n$/, '');
+		if (this.log){
+			console.log("INPUT:"+Program.input.replace(/\n/g,"\\n").replace(/\r/g,"\\r").replace(" ","\\b").replace(/\t/g,"\\t"));
+		}
+		//input creates mature salmon, this was done to get examples/quiz.hs working
+		Program.root.addSalmon(new Salmon(Program.input, true, false));
 		Program.input = undefined;
 	}
 };
