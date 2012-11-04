@@ -17,7 +17,7 @@ Lock.prototype = new Node('Lock', false, false, false, false);
 Lock.prototype.constructor = Lock;
 
 Lock.prototype.doesVeryBlockSalmon = function(a_Salmon){
-	return (a_Salmon.downstream && this.hasPower())
+	return (a_Salmon.downstream && this.hasPower());
 };
 
 Lock.prototype.preSnow = function(){
