@@ -5,6 +5,11 @@ second child unless it is prevented from moving there.
 
 NOTE:
 I will be moving fish when they arrive, perhaps this should be done during the misc step?
+
+TODO:
+change this to happen during the misc step. Otherwise, Child 1 does its down tick, and those get moved to
+the second child, then Child 2 does its down tick and those stay here... I don't think that was the intended
+operation.
 */
 var ReverseDown = function(){
 	Node.call(this, 'Reverse Down', false, false, false, false);

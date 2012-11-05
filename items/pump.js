@@ -13,5 +13,5 @@ Pump.prototype = new Node('Pump', false, false, false, false);
 Pump.prototype.constructor = Pump;
 
 Pump.prototype.doesVeryBlockSalmon = function(a_Salmon){
-	return !self.hasPower();
+	return !this.hasPower();
 };

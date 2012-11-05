@@ -14,7 +14,7 @@ Switch.prototype = new Sense();
 Switch.prototype.constructor = Switch;
 
 Switch.prototype.shouldAddSalmon = function(a_Salmon){
-	this.blockPower &= this.doesThisSalmonAllowPower(a_Salmon);
+	this.blockPower &= !this.doesThisSalmonAllowPower(a_Salmon);
 	return true;
 };
 
@@ -25,6 +25,6 @@ Switch.prototype.doesThisSalmonAllowPower = function(a_Salmon){
 Switch.prototype.evalElectricity = function(){
 	this.blockPower = true;
 	for (var i = this.salmon.length - 1; i >= 0 && this.blockPower; i--) {
-		this.blockPower &= this.doesThisSalmonAllowPower(this.salmon[i]);
+		this.blockPower &= !this.doesThisSalmonAllowPower(this.salmon[i]);
 	};
 };

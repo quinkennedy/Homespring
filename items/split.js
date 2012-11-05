@@ -5,6 +5,7 @@ name. The original salmon are destroyed.
 
 NOTE:
 doing this when salmon are added.
+empty strings are just destroyed
 */
 var Split = function(){
 	Node.call(this, 'Split', false, false, false, false);

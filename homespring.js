@@ -39,7 +39,9 @@ var Node = require('./items/rivernode'),
 	InverseLock = require('./items/inverse_lock'),
 	Waterfall = require('./items/waterfall'),
 	Net = require('./items/net'),
-	Fear = require('./items/fear');
+	Fear = require('./items/fear'),
+	AppendDown = require('./items/append_down'),
+	AppendUp = require('./items/append_up');
 
 /*
 Since Salmon is defined globally in salmon.js, we don't have to assign it to anything here.
@@ -178,7 +180,7 @@ Homespring.prototype.nodeMap = {
 	"snowmelt":Snowmelt,
 	"shallows":Shallows,
 	"rapids":Rapids,//Young salmon take two turns to pass through.
-	"append down":NotImplemented,/*For each downstream salmon that did not arrive from the first child, destroy
+	"append down":AppendDown,/*For each downstream salmon that did not arrive from the first child, destroy
 that salmon and append its name to each downstream salmon that did arrive
 from the first child.*/
 	"bear":Bear,
@@ -216,7 +218,7 @@ second child unless it is prevented from moving there.*/
 	"switch":Switch,//Blocks electricity unless mature salmon are present.
 	"young switch":YoungSwitch,//Blocks electricity unless young salmon are present.
 	"narrows":Narrows,//Very blocks salmon if another salmon is present.
-	"append up":NotImplemented,/*For each downstream salmon that did not arrive from the first child, destroy
+	"append up":AppendUp,/*For each downstream salmon that did not arrive from the first child, destroy
 that salmon and append its name to each upstream salmon.*/
 	"young range sense":NotImplemented,//Blocks electricity when young salmon are here or upstream.
 	"net":Net,//Very blocks mature salmon

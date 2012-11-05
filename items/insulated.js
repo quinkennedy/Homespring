@@ -4,7 +4,7 @@ Blocks power.
 */
 var Insulated = function(){
 	Node.call(this, 'Insulated', false, false, false, false);
-	this.blocksPower = true;
+	this.blockPower = true;
 };
 
 module.exports = Insulated;
