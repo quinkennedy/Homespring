@@ -1,26 +1,30 @@
 youth. fountain
 hatchery
-young. sense
-young. sense
-powers
-rapids
-rapids
-insulated
+young. switch
 oblivion
-switch
-powers
+young. switch
+hatchery
+oblivion
 rapids
+swap
 append. up
 narrows
-blah
-blah
-blah
+swap
+insulated
+inverse. lock
+holding
+range. sense
+powers
+padding
+padding
 bird
 
 
 
 
+
 . 
+time
 youth. fountain
 bear
 .
@@ -29,14 +33,70 @@ bear
 
 
 
+
+
+
+
+
+delay
+delay
+delay
+delay
+switch
+switch
 narrows
-split
+powers
+hatchery
+young. switch
+young. switch
+delay
+delay
+swap
 time
+split
 bird
 
 
 
 
-upstream. killing. device
+
+
+powers
+
+
+powers
+
+
 homeless
+time
+shallows
+delay
+youth. fountain
+bear
+. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+powers
+
+
+
 powers
