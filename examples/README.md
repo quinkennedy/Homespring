@@ -2,7 +2,7 @@
 <tr><td>add.hs</td><td>*No*</td><td>*No*</td><td>Yes</td></tr>
 <tr><td>cat.hs</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
 <tr><td>first.hs</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
-<tr><td>flipflop.hs</td><td>*No*</td><td>*No*</td><td>Yes</td></tr>
+<tr><td>flipflop.hs</td><td>Yes</td><td>*No*</td><td>Yes</td></tr>
 <tr><td>hello-1.hs</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
 <tr><td>hello-2.hs</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
 <tr><td>hello-3.hs</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
@@ -11,7 +11,7 @@
 <tr><td>null.hs</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
 <tr><td>quiz.hs</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
 <tr><td>simple.hs</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
-<tr><td>tic.hs</td><td>*No*</td><td>*No*</td><td>Yes</td></tr>
+<tr><td>tic.hs</td><td>Yes</td><td>*No*</td><td>Yes</td></tr>
 <tr><td>reverse.hs</td><td>Yes</td><td>Yes</td><td>No</td></tr>
 <tr><td>reverse-2.hs</td><td>Yes</td><td>Yes</td><td>No</td></tr>
 <tr><td>reverse-3.hs</td><td>Yes</td><td>Yes</td><td>No</td></tr>
