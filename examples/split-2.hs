@@ -9,6 +9,7 @@ rapids
 swap
 append. up
 narrows
+swap
 insulated
 inverse. lock
 holding
@@ -36,6 +37,7 @@ bear
 
 
 
+
 delay
 delay
 delay
@@ -44,9 +46,39 @@ switch
 switch
 narrows
 powers
+hatchery
+young. switch
+young. switch
+delay
+delay
+swap
 time
 split
 bird
+
+
+
+
+
+
+powers
+
+
+powers
+
+
+homeless
+time
+shallows
+delay
+youth. fountain
+bear
+. 
+
+
+
+
+
 
 
 

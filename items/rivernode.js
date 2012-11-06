@@ -117,6 +117,26 @@ Node.prototype.containsName = function(a_sName){
 	return false;
 };
 
+/**
+ * Tells us if this subtree contains any salmon which meet the filters passed in.
+ * @param  {boolean} a_bMature     says whether to look for mature salmon or young salmon. If undefined, look for salmon of any age.
+ * @param  {boolean} a_bDownstream says whether to look for salmon moving upstream or downstream. If undefined, look for salmon moving either direction.
+ * @return {boolean}               True iff there are salmon in this subtree that match the passed-in filters.
+ */
+Node.prototype.containsSalmon = function(a_bMature, a_bDownstream){
+	var match = false;
+	var currSalmon;
+	for (var i = this.salmon.length - 1; i >= 0 && !match; i--) {
+		currSalmon = this.salmon[i];
+		match |= (a_bMature == undefined ? true : currSalmon.mature == a_bMature) &&
+					(a_bDownstream == undefined ? true : currSalmon.downstream == a_bDownstream);
+	};
+	for (var i = this.upstream.length - 1; i >= 0 && !match; i--) {
+		match |= this.upstream[i].containsSalmon();
+	};
+	return match;
+};
+
 Node.prototype.implHasPower = function(){
 	if (this.generatingPower){
 		return true;

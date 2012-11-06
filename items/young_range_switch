@@ -1,0 +1,18 @@
+var Node = require('./rivernode');
+/*
+Blocks electricity unless young salmon are here or upstream.
+*/
+var YoungRangeSwitch = function(){
+	Node.call(this, 'Young Range Switch', false, false, false, false);
+};
+
+module.exports = YoungRangeSwitch;
+
+YoungRangeSwitch.prototype = new Node('Young Range Switch', false, false, false, false);
+
+YoungRangeSwitch.prototype.constructor = YoungRangeSwitch;
+
+YoungRangeSwitch.prototype.hasPower = function(){
+	this.blockPower = !this.containsSalmon(false, undefined);
+	return this.implHasPower();
+};

@@ -41,7 +41,11 @@ var Node = require('./items/rivernode'),
 	Net = require('./items/net'),
 	Fear = require('./items/fear'),
 	AppendDown = require('./items/append_down'),
-	AppendUp = require('./items/append_up');
+	AppendUp = require('./items/append_up'),
+	RangeSense = require('./items/range_sense'),
+	RangeSwitch = require('./items/range_switch'),
+	YoungRangeSense = require('./items/young_range_sense'),
+	YoungRangeSwitch = require('./items/young_range_switch');
 
 /*
 Since Salmon is defined globally in salmon.js, we don't have to assign it to anything here.
@@ -178,7 +182,7 @@ Homespring.prototype.nodeMap = {
 	"hatchery":Hatchery,
 	"hydro power":HydroPower,
 	"snowmelt":Snowmelt,
-	"shallows":Shallows,
+	"shallows":Shallows,//Mature salmon take two turns to pass through.
 	"rapids":Rapids,//Young salmon take two turns to pass through.
 	"append down":AppendDown,/*For each downstream salmon that did not arrive from the first child, destroy
 that salmon and append its name to each downstream salmon that did arrive
@@ -205,7 +209,7 @@ last child.*/
 	"oblivion":Oblivion,/*When powered, changes the name of each salmon to “”. Can be destroyed by
 snowmelt.*/
 	"pump":Pump,//Very blocks salmon unless powered.
-	"range sense":NotImplemented,//Blocks electricity when mature salmon are here or upstream.
+	"range sense":RangeSense,//Blocks electricity when mature salmon are here or upstream.
 	"fear":Fear,//Very blocks salmon when powered.
 	"reverse up":ReverseUp,/*For each downstream salmon that arrived from the second child, move it to the
 first child unless it is prevented from moving there.*/
@@ -220,7 +224,7 @@ second child unless it is prevented from moving there.*/
 	"narrows":Narrows,//Very blocks salmon if another salmon is present.
 	"append up":AppendUp,/*For each downstream salmon that did not arrive from the first child, destroy
 that salmon and append its name to each upstream salmon.*/
-	"young range sense":NotImplemented,//Blocks electricity when young salmon are here or upstream.
+	"young range sense":YoungRangeSense,//Blocks electricity when young salmon are here or upstream.
 	"net":Net,//Very blocks mature salmon
 	"force down":ForceDown,/*For each downstream salmon that arrived from the first child, move it to the
 second child unless it is prevented from moving there.
@@ -235,8 +239,8 @@ destroyed by snowmelt.*/
 	"bridge":Bridge,//If destroyed by snowmelt, blocks snowmelt and water and very blocks salmon.
 	"split":Split,/*Splits each salmon into a new salmon for each letter in the original salmon’s
 name. The original salmon are destroyed.*/
-	"range switch":NotImplemented,//Blocks electricity unless mature salmon are here or upstream.
-	"young range switch":NotImplemented//Blocks electricity unless young salmon are here or upstream.
+	"range switch":RangeSwitch,//Blocks electricity unless mature salmon are here or upstream.
+	"young range switch":YoungRangeSwitch//Blocks electricity unless young salmon are here or upstream.
 };
 
 Homespring.prototype.getNode = function(a_sName){
