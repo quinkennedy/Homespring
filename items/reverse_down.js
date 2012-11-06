@@ -5,6 +5,7 @@ second child unless it is prevented from moving there.
 
 NOTE:
 I will be moving fish when they arrive, perhaps this should be done during the misc step?
+This now also changes the fish to an upstream fish, Was done based on add.hs
 
 TODO:
 change this to happen during the misc step. Otherwise, Child 1 does its down tick, and those get moved to
@@ -28,11 +29,12 @@ ReverseDown.prototype.addSalmon = function(a_Salmon, a_Source){
 	} else {
 		//we have at least 2 children
 		if (this.shouldAddSalmon(a_Salmon, a_Source)){
+			var newSalmon = new Salmon(a_Salmon.name, a_Salmon.mature, false);
 			if (!this.blockSalmon && 
 				a_Source === this.upstream[0] && 
-				!this.upstream[1].doesVeryBlockSalmon(a_Salmon)){
+				!this.upstream[1].doesVeryBlockSalmon(newSalmon)){
 				//move to second child
-				this.upstream[1].addSalmon(a_Salmon, a_Source);
+				this.upstream[1].addSalmon(newSalmon, a_Source);
 			} else {
 				//keep it as normal
 				this.salmon.push(a_Salmon);

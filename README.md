@@ -27,3 +27,4 @@ changes
 =======
 * v0.1.0 documentation says snow and water ticks are post order, I am doing them pre-order so snow and water only move downstream 1 level per tick. This seems to parallel how the interpreter is implemented in v0.1.0.
 * v0.1.0 documentation says of springs: "it creates water." I have implemented them the same as snowmelt so this is changed to: "Creates water at the end of each water tick." This means that water starts flowing downstream in the second tick. This was done to get hello-3.hs to work correctly.
+* for reverse/force down/up: The documentation does not specify, but some examples (add.hs and others) seem to suggest that the fish is not only pushed up to the first/second child, but is also changed to an upstream fish.

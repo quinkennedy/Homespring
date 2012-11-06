@@ -1,5 +1,5 @@
 <table><tr><th>Example</th><th>Parses</th><th>Runs</th><th>Original</th></tr>
-<tr><td>add.hs</td><td>*No*</td><td>*No*</td><td>Yes</td></tr>
+<tr><td>add.hs</td><td>Yes</td><td>*No*</td><td>Yes</td></tr>
 <tr><td>cat.hs</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
 <tr><td>first.hs</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
 <tr><td>flipflop.hs</td><td>Yes</td><td>*No*</td><td>Yes</td></tr>

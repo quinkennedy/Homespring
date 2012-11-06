@@ -45,7 +45,8 @@ var Node = require('./items/rivernode'),
 	RangeSense = require('./items/range_sense'),
 	RangeSwitch = require('./items/range_switch'),
 	YoungRangeSense = require('./items/young_range_sense'),
-	YoungRangeSwitch = require('./items/young_range_switch');
+	YoungRangeSwitch = require('./items/young_range_switch'),
+	Spawn = require('./items/spawn');
 
 /*
 Since Salmon is defined globally in salmon.js, we don't have to assign it to anything here.
@@ -232,7 +233,7 @@ Also blocks upstream salmon from moving to the last child.*/
 	"force up":ForceUp,/*For each downstream salmon that arrived from the second child, move it to the
 first child unless it is prevented from moving there.
 Also blocks upstream salmon from moving to the first child.*/
-	"spawn":NotImplemented,//When powered, makes all salmon upstream spawn.
+	"spawn":Spawn,//When powered, makes all salmon upstream spawn.
 	"power invert":PowerInvert,/*This node is powered if and only if none of its children are powered. Can be
 destroyed by snowmelt.*/
 	"current":Current,//Very blocks young salmon

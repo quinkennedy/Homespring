@@ -197,16 +197,29 @@ Node.prototype.tickFishUp = function(){
 				continue;
 			}
 			//spawn this salmon
-			//here we remove the curr salmon, and re-add it at the head
-			//but we may want to modify it in-place...
-			this.salmon.splice(i, 1);
-			currSalmon.mature = true;
-			currSalmon.downstream = true;
-			this.addSalmon(currSalmon, this);
-			this.addSalmon(new Salmon(this.name, false, true), this);
+			this.spawnSalmon(i);
 		}
 	};
 	this.postTickFishUp();
+};
+
+Node.prototype.spawnSalmon = function(a_nIndex){
+	//here we remove the specified salmon, and re-add it at the head
+	//but we may want to modify it in-place...
+	var currSalmon = this.salmon.splice(a_nIndex, 1)[0];
+	currSalmon.mature = true;
+	currSalmon.downstream = true;
+	this.addSalmon(currSalmon, this);
+	this.addSalmon(new Salmon(this.name, false, true), this);
+};
+
+Node.prototype.spawnTree = function(){
+	for (var i = this.salmon.length - 1; i >= 0; i--) {
+		this.spawnSalmon(i);
+	};
+	for (var i = this.upstream.length - 1; i >= 0; i--) {
+		this.upstream[i].spawnTree();
+	};
 };
 
 //override
