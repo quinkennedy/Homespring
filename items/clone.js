@@ -20,7 +20,8 @@ Clone.prototype.constructor = Clone;
 Clone.prototype.postAddSalmon = function(a_Salmon){
 	if (!this.addingClone){
 		this.addingClone = true;
-		this.addSalmon(a_Salmon, this);
+		var newClone = new Salmon(a_Salmon.name, false, true);
+		this.addSalmon(newClone, this);
 		this.addingClone = false;
 	}
 };

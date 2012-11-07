@@ -132,7 +132,7 @@ Node.prototype.containsSalmon = function(a_bMature, a_bDownstream){
 					(a_bDownstream == undefined ? true : currSalmon.downstream == a_bDownstream);
 	};
 	for (var i = this.upstream.length - 1; i >= 0 && !match; i--) {
-		match |= this.upstream[i].containsSalmon();
+		match |= this.upstream[i].containsSalmon(a_bMature, a_bDownstream);
 	};
 	return match;
 };
