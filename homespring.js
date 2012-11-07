@@ -64,6 +64,7 @@ NotImplemented.prototype.constructor = NotImplemented;
 
 var Homespring = function(){
 	this.log = false;
+	this.debug = false;
 	this.intervalId = undefined;
 };
 
@@ -261,7 +262,12 @@ Homespring.prototype.run = function(a_nLimit){
 		return;
 	}
 	Program.maxSteps = a_nLimit;
-	this.intervalId = setInterval(this.step.bind(this), 0);
+	if (this.debug){
+		setTimeout(this.step.bind(this), 0);
+		console.log("DEBUGGING");
+	} else {
+		this.intervalId = setInterval(this.step.bind(this), 0);
+	}
 };
 
 Homespring.prototype.cleanup = function(){
@@ -368,7 +374,7 @@ Homespring.prototype.tickInput = function(){
 
 if (!process.argv[2]) {
 	console.log("you must include a filename for where to read the program from");
-	console.log("node homespring.js <filename> [debug] [num_iterations]");
+	console.log("node homespring.js <filename> [logging] [num_iterations]");
 } else {
 	//fs used for file read/write
 	var fs = require("fs");
@@ -379,6 +385,7 @@ if (!process.argv[2]) {
 
 		if (process.argv[3] && process.argv[3] != '0' && process.argv[3].toLowerCase() != 'false' && process.argv[3].toLowerCase() != 'f'){
 			h.log = true;
+			h.debug = true;
 		}
 
 		h.parse(input);
@@ -386,8 +393,11 @@ if (!process.argv[2]) {
 		var limit = undefined;
 		if (process.argv[4]){
 			limit = parseInt(process.argv[4]);
-			if (limit != limit)//NaN
+			if (limit != limit){//NaN
 				limit = undefined;
+			} else {
+				h.debug = false;//turn off debugging if we are only running a specific number of iterations
+			}
 		}
 
 		//setup user input
@@ -400,7 +410,14 @@ if (!process.argv[2]) {
 		 * @param  {obj} command Some command object that I can .toString to get the raw user input
 		 */
 		h.stdin.on('data',function(command){
-			Program.input = command.toString();
+			var input = command.toString();
+			if (input.length == 1){
+				if (h.debug){
+					setTimeout(h.step.bind(h), 0);
+				}
+			} else {
+				Program.input = command.toString();
+			}
 		});
 
 		h.run(limit);

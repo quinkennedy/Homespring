@@ -12,8 +12,8 @@
 <tr><td>quiz.hs</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
 <tr><td>simple.hs</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
 <tr><td>tic.hs</td><td>Yes</td><td>*No*</td><td>Yes</td></tr>
-<tr><td>reverse.hs</td><td>Yes</td><td>Yes</td><td>No</td></tr>
-<tr><td>reverse-2.hs</td><td>Yes</td><td>Yes</td><td>No</td></tr>
-<tr><td>reverse-3.hs</td><td>Yes</td><td>Yes</td><td>No</td></tr>
+<tr><td>reverse.hs</td><td>Yes</td><td>*No*</td><td>No</td></tr>
+<tr><td>reverse-2.hs</td><td>Yes</td><td>*No*</td><td>No</td></tr>
+<tr><td>reverse-3.hs</td><td>Yes</td><td>*No*</td><td>No</td></tr>
 <tr><td>print_linkedlist_nyc.hs</td><td>Yes</td><td>Yes</td><td>No</td></tr>
 <tr><td>split.hs</td><td>Yes</td><td>*No*</td><td>No</td></tr></table>

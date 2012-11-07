@@ -1,9 +1,10 @@
 usage
 =======
-```node homespring.js <filename> [debug] [limit]```  
+```node homespring.js <filename> [logging] [limit]```  
 * ```<filename>``` is required, and is the relative path to the file which contains the homespring program text  
-* ```[debug]``` is optional and should be '0', 'f', or 'false' in order to keep debugging disabled (default). Any other values will enable debug output  
-* ```[limit]``` is optional. If it is included, [debug] must be specified. This is used to limit the number of steps the interpreter will run before quitting regardless of program state.  
+* ```[logging]``` is optional and should be '0', 'f', or 'false' in order to keep logging disabled (default). Any other values will enable logging output  
+* ```[limit]``` is optional. If it is included, [logging] must be specified. This is used to limit the number of steps the interpreter will run before quitting regardless of program state.  
+* If [logging] is specified, debugging will also be enabled. Debugging mode requires you to hit enter between each step. If both [logging] and [limit] are defined, debugging stays off (the default).  
 
 examples:  
 ```node homespring.js examples/hello-3.hs```  
