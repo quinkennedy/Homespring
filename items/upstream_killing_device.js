@@ -2,6 +2,8 @@ var Node = require('./rivernode');
 /*
 When powered and if it contains more than one child, kills all the salmon in the
 last child.
+From original:
+Kills everything in the node upstream towards the bottom when electrified.
 
 NOTE:
 I am implementing this during the Misc tick, 

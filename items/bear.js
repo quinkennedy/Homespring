@@ -1,6 +1,7 @@
 var Node = require('./rivernode');
 /*
 Eats mature salmon.
+TODO: the original documentation mentions that operations such as Bear should be performed during the misc step.
 */
 var Bear = function(){
 	Node.call(this, 'Bear', false, false, false, false);

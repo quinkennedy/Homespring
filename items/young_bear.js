@@ -7,6 +7,8 @@ they don’t have to take the time to evade the bear.
 NOTE:
 perhaps the re-ordering should happen during the misc tick? i'm doing it when
 fish are added.
+
+TODO: the original documentation mentions that operations such as Bear should be performed during the misc step.
 */
 var YoungBear = function(){
 	Node.call(this, 'YoungBear', false, false, false, false);

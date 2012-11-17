@@ -105,6 +105,7 @@ Node.prototype.postTickFishDown = function(){};
 
 //tells us if this subtree contains a node with the specified
 //name
+//TODO: maybe this should only consider the name of springs
 Node.prototype.containsName = function(a_sName){
 	if (this.name == a_sName){
 		return true;
@@ -171,30 +172,33 @@ Node.prototype.tickFishUp = function(){
 		currSalmon = this.salmon[i]
 		if (!currSalmon.downstream && this.shouldMoveSalmon(currSalmon)){
 			salmonMoved = false;
-			//for each upstream fish, try to find a
-			//child node with that fish's name
-			for (var j = 0; j < this.upstream.length && !salmonMoved && !this.blockSalmon; j++) {
-				if (!this.upstream[j].doesVeryBlockSalmon(currSalmon) && this.upstream[j].containsName(currSalmon.name)){
-					this.upstream[j].addSalmon(currSalmon, this);
-					this.salmon.splice(i,1);
-					salmonMoved = true;
-					break;
+			//For each upstream fish, try to find a
+			//child node with that fish's name.
+			//If _this_ node matches the salmon's name, then spawn here
+			if (currSalmon.name != this.name){
+				for (var j = 0; j < this.upstream.length && !salmonMoved && !this.blockSalmon; j++) {
+					if (!this.upstream[j].doesVeryBlockSalmon(currSalmon) && this.upstream[j].containsName(currSalmon.name)){
+						this.upstream[j].addSalmon(currSalmon, this);
+						this.salmon.splice(i,1);
+						salmonMoved = true;
+						break;
+					}
+				};
+				if (salmonMoved){
+					continue;
 				}
-			};
-			if (salmonMoved){
-				continue;
-			}
-			//for each upstream fish, try to move to _any_ child node
-			for (var j = 0; j < this.upstream.length && !salmonMoved && !this.blockSalmon; j++) {
-				if (!this.upstream[j].doesVeryBlockSalmon(currSalmon)){
-					this.upstream[j].addSalmon(currSalmon, this);
-					this.salmon.splice(i,1);
-					salmonMoved = true;
-					break;
+				//for each upstream fish, try to move to _any_ child node
+				for (var j = 0; j < this.upstream.length && !salmonMoved && !this.blockSalmon; j++) {
+					if (!this.upstream[j].doesVeryBlockSalmon(currSalmon)){
+						this.upstream[j].addSalmon(currSalmon, this);
+						this.salmon.splice(i,1);
+						salmonMoved = true;
+						break;
+					}
+				};
+				if (salmonMoved){
+					continue;
 				}
-			};
-			if (salmonMoved){
-				continue;
 			}
 			//spawn this salmon
 			this.spawnSalmon(i);
@@ -231,10 +235,11 @@ Node.prototype.addSalmon = function(a_Salmon, a_Source){
 	if (this.shouldAddSalmon(a_Salmon)){
 		this.salmon.push(a_Salmon);
 	}
-	this.postAddSalmon(a_Salmon);
+	this.postAddSalmon(a_Salmon, a_Source);
 };
 
-Node.prototype.postAddSalmon = function(a_Salmon){
+//override
+Node.prototype.postAddSalmon = function(a_Salmon, a_Source){
 };
 
 //override
