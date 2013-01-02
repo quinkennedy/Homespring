@@ -1,0 +1,49 @@
+{ "name": "Homespring",
+  "scopeName": "source.homespring",
+  "fileTypes": ["hsg"],
+  "patterns": [
+  { 
+    "begin":"^|\\s",
+    "match":"powers|hydro\\.\\spower|insulated|power\\.\\sinvert",
+    "end":"$|\\s[^\\.]",
+	"name":"keyword.other.power.source.homespring",
+	"comment":"produces or blocks power"},
+  { 
+    "begin":"^|\\s",
+    "match":"bear|bird|young\\.\\sbear|upstream\\.\\skilling\\.\\sdevice",
+    "end":"$|\\s[^\\.]",
+  "name":"keyword.other.kill.source.homespring",
+  "comment":"produces or blocks power"},
+  { 
+    "begin":"^|\\s",
+    "match":"hatchery|spawn|clone",
+    "end":"$|\\s[^\\.]",
+  "name":"keyword.other.birth.source.homespring",
+  "comment":"produces or blocks power"},
+  { 
+    "begin":"^|\\s",
+    "match":"sense|switch|young\\.\\srange\\.\\sswitch|range\\.\\sswitch|young\\.\\srange\\.\\ssense|young\\.\\sswitch|young\\.\\ssense",
+    "end":"$|\\s[^\\.]",
+  "name":"keyword.control.power.source.homespring",
+  "comment":"produces or blocks power"},
+  { 
+    "begin":"^|\\s",
+    "match":"lock|inverse\\.\\slock|current|shallows|rapids|force\\.\\sup|force\\.\\sdown|net|narrows|reverse\\.\\sdown|reverse\\.\\sup|fear|pump|waterfall|force\\.\\sfield",
+    "end":"$|\\s[^\\.]",
+  "name":"keyword.control.salmon.source.homespring",
+  "comment":"produces or blocks power"},
+  { 
+    "begin":"^|\\s",
+    "match":"time|youth\\.\\sfountain|split|append\\.\\sup|oblivion|append\\.\\sdown",
+    "end":"$|\\s[^\\.]",
+  "name":"keyword.operator.salmon.source.homespring",
+  "comment":"produces or blocks power"},
+  { 
+    "begin":"^|\\s",
+    "match":"snowmelt|marshy|universe|evaporates|bridge",
+    "end":"$|\\s[^\\.]",
+  "name":"keyword.control.river.source.homespring",
+  "comment":"produces or blocks power"}
+  ],
+  "uuid": "47133ea8-1f7b-40b7-b983-efd5996a31e2"
+}

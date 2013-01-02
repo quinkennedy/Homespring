@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>fileTypes</key>
+	<array>
+		<string>hsg</string>
+	</array>
+	<key>name</key>
+	<string>Homespring</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>begin</key>
+			<string>^|\s</string>
+			<key>comment</key>
+			<string>produces or blocks power</string>
+			<key>end</key>
+			<string>$|\s[^\.]</string>
+			<key>match</key>
+			<string>powers|hydro\.\spower|insulated|power\.\sinvert</string>
+			<key>name</key>
+			<string>keyword.other.power.source.homespring</string>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>^|\s</string>
+			<key>comment</key>
+			<string>produces or blocks power</string>
+			<key>end</key>
+			<string>$|\s[^\.]</string>
+			<key>match</key>
+			<string>bear|bird|young\.\sbear|upstream\.\skilling\.\sdevice</string>
+			<key>name</key>
+			<string>keyword.other.kill.source.homespring</string>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>^|\s</string>
+			<key>comment</key>
+			<string>produces or blocks power</string>
+			<key>end</key>
+			<string>$|\s[^\.]</string>
+			<key>match</key>
+			<string>hatchery|spawn|clone</string>
+			<key>name</key>
+			<string>keyword.other.birth.source.homespring</string>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>^|\s</string>
+			<key>comment</key>
+			<string>produces or blocks power</string>
+			<key>end</key>
+			<string>$|\s[^\.]</string>
+			<key>match</key>
+			<string>sense|switch|young\.\srange\.\sswitch|range\.\sswitch|young\.\srange\.\ssense|young\.\sswitch|young\.\ssense</string>
+			<key>name</key>
+			<string>keyword.control.power.source.homespring</string>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>^|\s</string>
+			<key>comment</key>
+			<string>produces or blocks power</string>
+			<key>end</key>
+			<string>$|\s[^\.]</string>
+			<key>match</key>
+			<string>lock|inverse\.\slock|current|shallows|rapids|force\.\sup|force\.\sdown|net|narrows|reverse\.\sdown|reverse\.\sup|fear|pump|waterfall|force\.\sfield</string>
+			<key>name</key>
+			<string>keyword.control.salmon.source.homespring</string>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>^|\s</string>
+			<key>comment</key>
+			<string>produces or blocks power</string>
+			<key>end</key>
+			<string>$|\s[^\.]</string>
+			<key>match</key>
+			<string>time|youth\.\sfountain|split|append\.\sup|oblivion|append\.\sdown</string>
+			<key>name</key>
+			<string>keyword.operator.salmon.source.homespring</string>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>^|\s</string>
+			<key>comment</key>
+			<string>produces or blocks power</string>
+			<key>end</key>
+			<string>$|\s[^\.]</string>
+			<key>match</key>
+			<string>snowmelt|marshy|universe|evaporates|bridge</string>
+			<key>name</key>
+			<string>keyword.control.river.source.homespring</string>
+		</dict>
+	</array>
+	<key>scopeName</key>
+	<string>source.homespring</string>
+	<key>uuid</key>
+	<string>47133ea8-1f7b-40b7-b983-efd5996a31e2</string>
+</dict>
+</plist>

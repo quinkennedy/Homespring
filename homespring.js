@@ -46,7 +46,8 @@ var Node = require('./items/rivernode'),
 	RangeSwitch = require('./items/range_switch'),
 	YoungRangeSense = require('./items/young_range_sense'),
 	YoungRangeSwitch = require('./items/young_range_switch'),
-	Spawn = require('./items/spawn');
+	Spawn = require('./items/spawn'),
+	Gyser = require('./items/gyser');
 
 /*
 Since Salmon is defined globally in salmon.js, we don't have to assign it to anything here.
@@ -98,6 +99,9 @@ Homespring.prototype.parse = function(a_sText){
 		if (i < a_sText.length - 1){
 			nextChar = a_sText[i+1];
 		} else {
+			if (this.log){
+				console.log('done');
+			}
 			nextChar = undefined;
 			//since we are at the end of the text
 			//we will want to push this final token
@@ -120,8 +124,15 @@ Homespring.prototype.parse = function(a_sText){
 					pushToken = true;
 				}
 				i++;
+				//make sure we push this token if this is the end of input
+				if (!pushToken && i >= a_sText.length - 1){
+					pushToken = true;
+					if (this.log){
+						console.log('done');
+					}
+				}
 			} else {
-				//NODE: I have chosen to treat the '.'
+				//NOTE: I have chosen to treat the '.'
 				//as a special character only when 
 				//postfixed by a space or newline
 				currToken += currChar;
@@ -181,8 +192,9 @@ Homespring.prototype.parse = function(a_sText){
 };
 
 Homespring.prototype.nodeMap = {
-	"hatchery":Hatchery,
-	"hydro power":HydroPower,
+	"hatchery":Hatchery,/*When powered, creates a mature, upstream salmon named “homeless”. Operates
+during the fish tick hatch step.*/
+	"hydro power":HydroPower,//Creates electricity when watered. Can be destroyed by snowmelt.
 	"snowmelt":Snowmelt,
 	"shallows":Shallows,//Mature salmon take two turns to pass through.
 	"rapids":Rapids,//Young salmon take two turns to pass through.
@@ -191,7 +203,7 @@ that salmon and append its name to each downstream salmon that did arrive
 from the first child.*/
 	"bear":Bear,
 	"force field":ForceField,
-	"sense":Sense,
+	"sense":Sense,//Blocks electricity when mature salmon are present.
 	"clone":Clone,//For each salmon, create a young, downstream salmon with the same name.
 	"young bear":YoungBear,/*Eats every other mature salmon (the first mature salmon gets eaten, the second
 one doesn’t, etc.). Young salmon are moved to the beginning of the list because
@@ -201,12 +213,12 @@ they don’t have to take the time to evade the bear.*/
 last child.*/
 	"waterfall":Waterfall,//Blocks upstream salmon
 	"universe":Universe,
-	"powers":Powers,
-	"marshy":Marshy,
+	"powers":Powers,//Generates power.
+	"marshy":Marshy,//Snowmelts take two turns to pass through.
 	"insulated":Insulated,//Blocks power.
 	"upstream sense":UpstreamSense,//Blocks the flow of electricity when upstream, mature salmon are present.
 	"downstream sense":DownstreamSense,
-	"evaporates":Evaporates,
+	"evaporates":Evaporates,//Blocks water and snowmelt when powered.
 	"youth fountain":YouthFountain,//Makes all salmon young.
 	"oblivion":Oblivion,/*When powered, changes the name of each salmon to “”. Can be destroyed by
 snowmelt.*/
@@ -243,6 +255,11 @@ destroyed by snowmelt.*/
 name. The original salmon are destroyed.*/
 	"range switch":RangeSwitch,//Blocks electricity unless mature salmon are here or upstream.
 	"young range switch":YoungRangeSwitch//Blocks electricity unless young salmon are here or upstream.
+
+};
+
+Homespring.prototype.useExtended = function(){
+	this.nodeMap["gyser"] = Gyser;//50% chance of creating water each iteration
 };
 
 Homespring.prototype.getNode = function(a_sName){
@@ -372,6 +389,126 @@ Homespring.prototype.tickInput = function(){
 	}
 };
 
+/**
+ * Handle flags etc
+ */
+var processArgumentsAndGo = function(){
+	var invalidParams = false;
+	if (!process.argv[2]) {
+		console.log("you must include a filename for where to read the program from");
+		console.log("node homespring.js <filename>");
+		invalidParams = true;
+	} 
+    var argv = process.argv;
+    var log = false;
+    var limit = undefined;
+    var debug = false;
+    var extended = false;
+    var i = 2;
+    //look at all but the last flag. the last one is the file name to open
+    for(; i < argv.length - 1; i++){
+        switch(argv[i]){
+            case "-h":
+            case "--help":
+                printHelp();
+                break;
+            case "-d":
+            case "--debug":
+            	log = true;
+            	if (limit == undefined){
+            		debug = true;
+            	}
+            	break;
+            case "-e":
+            case "--extended":
+            	extended = true;
+            	break;
+            case "-n":
+            	debug = false;
+            	limit = setIterationLimit(argv[++i]);
+            	break;
+            default:
+            	console.log("unknown flag: " + argv[i]);
+            	invalidParams = true;
+            	break;
+        }
+    }
+    if (i >= argv.length){
+    	console.log("incorrectly formatted arguments");
+    	invalidParams = true;
+    }
+    if (invalidParams){
+    	console.log("use --help to see usage");
+    	return;
+    }
+
+    var filename = argv[argv.length - 1];
+
+    var fs = require("fs");
+    try{
+		var input = fs.readFileSync(filename, 'utf8').replace('\r\n','\n');
+		h = new Homespring();
+		h.log = log;
+		h.debug = debug;
+		if (extended){
+			h.useExtended();
+		}
+		h.parse(input);
+
+		//setup user input
+		//stdin used for user input
+		h.stdin = process.openStdin();
+		h.stdin.setEncoding('utf8');
+
+		/**
+		 * Here we process each line of input from the user
+		 * @param  {obj} command Some command object that I can .toString to get the raw user input
+		 */
+		h.stdin.on('data',function(command){
+			var input = command.toString();
+			if (input.length == 1){
+				if (h.debug){
+					setTimeout(h.step.bind(h), 0);
+				}
+			} else {
+				Program.input = command.toString();
+			}
+		});
+
+		h.run(limit);
+    } catch (e){
+		console.log("error while loading and running file:");
+		console.log(e);
+		console.log(e.stack);
+	}
+};
+
+var setIterationLimit = function(newLimit){
+    var tempLimit = parseInt(newLimit);
+    //check that tempPort != NaN
+    //and that the port is in the valid port range
+    if (tempLimit != tempLimit){
+    	tempLimit = undefined;
+    } else if (tempLimit < 0){
+    	tempLimit = 0;
+    }
+    return tempLimit;
+};
+
+var printHelp = function(){
+    console.log("command line parameters:");
+    console.log("\t--help (-h): print this help text");
+    console.log("\t--debug (-d): log each step of processing. Enables stepping through the iterations unless pared with -n");
+    console.log("\t--extended (-e): use extended semantics");
+    console.log("\t-n [numIterations]: tells the interpreter to simulate at most numIterations number of iterations");
+    console.log("examples:");
+    console.log("\tnode homespring.js -d -n 1000 examples/hello-1.hs");
+    console.log("\tnode homespring.js -n 10 examples/name.hs");
+};
+
+processArgumentsAndGo();
+
+/*
 if (!process.argv[2]) {
 	console.log("you must include a filename for where to read the program from");
 	console.log("node homespring.js <filename> [logging] [num_iterations]");
@@ -408,7 +545,7 @@ if (!process.argv[2]) {
 		/**
 		 * Here we process each line of input from the user
 		 * @param  {obj} command Some command object that I can .toString to get the raw user input
-		 */
+		 *//*
 		h.stdin.on('data',function(command){
 			var input = command.toString();
 			if (input.length == 1){
@@ -426,4 +563,4 @@ if (!process.argv[2]) {
 		console.log(e);
 		console.log(e.stack);
 	}
-}
+}*/

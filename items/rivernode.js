@@ -53,6 +53,7 @@ Node.prototype.preWater = function(){};
 Node.prototype.tickWater = function(){
 	this.preWater();
 	//console.log(this.name);
+	this.water = false;
 	if (!this.blockWater){
 		for (var i = this.upstream.length - 1; i >= 0; i--) {
 			if (this.upstream[i].water){

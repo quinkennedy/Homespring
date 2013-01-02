@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>author</key>
+	<string>Quin Kennedy</string>
+	<key>name</key>
+	<string>Homespring</string>
+	<key>settings</key>
+	<array>
+		<dict>
+			<key>settings</key>
+			<dict>
+				<key>background</key>
+				<string>#252222</string>
+				<key>caret</key>
+				<string>#FFFFFF</string>
+				<key>foreground</key>
+				<string>#DADADA</string>
+				<key>invisibles</key>
+				<string>#4F4D4D</string>
+				<key>lineHighlight</key>
+				<string>#353030</string>
+				<key>selection</key>
+				<string>#73597E80</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Power</string>
+			<key>scope</key>
+			<string>keyword.other.power.source.homespring</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#ff5f25</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Kill</string>
+			<key>scope</key>
+			<string>keyword.other.kill.source.homespring</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#ff2667</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Birth</string>
+			<key>scope</key>
+			<string>keyword.other.birth.source.homespring</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#1fda77</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Power Control</string>
+			<key>scope</key>
+			<string>keyword.control.power.source.homespring</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#feef50</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Salmon Control</string>
+			<key>scope</key>
+			<string>keyword.control.salmon.source.homespring</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#eba8f9</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>River Control</string>
+			<key>scope</key>
+			<string>keyword.control.river.source.homespring</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#00b2f8</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Salmon Operator</string>
+			<key>scope</key>
+			<string>keyword.operator.salmon.source.homespring</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#e940f6</string>
+			</dict>
+		</dict>
+	</array>
+	<key>uuid</key>
+	<string>343011CC-B7DF-11D9-B5C6-000D93C8BE29</string>
+</dict>
+</plist>
